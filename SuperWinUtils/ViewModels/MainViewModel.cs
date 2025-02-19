@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace SuperWinUtils.ViewModels;
+﻿namespace SuperWinUtils.ViewModels;
 
 public partial class MainViewModel : BaseViewModel
 {
