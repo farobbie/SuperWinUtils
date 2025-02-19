@@ -9,21 +9,17 @@ namespace SuperWinUtils.ViewModels;
 
 public partial class ShellViewModel : BaseViewModel
 {
-    [ObservableProperty]
-    private bool isBackEnabled;
 
     [ObservableProperty]
-    private object? selected;
+    public partial bool IsBackEnabled { get; set; }
 
-    public INavigationService NavigationService
-    {
-        get;
-    }
 
-    public INavigationViewService NavigationViewService
-    {
-        get;
-    }
+    [ObservableProperty]
+    public partial object? Selected { get; set; }
+
+    public INavigationService NavigationService { get; }
+
+    public INavigationViewService NavigationViewService { get; }
 
     public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
     {

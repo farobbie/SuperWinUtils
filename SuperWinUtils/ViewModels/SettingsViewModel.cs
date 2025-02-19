@@ -18,11 +18,10 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly IThemeSelectorService _themeSelectorService;
 
     [ObservableProperty]
-    private ElementTheme _elementTheme;
+    public partial ElementTheme ElementTheme { get; set; }
 
     [ObservableProperty]
-    private string _versionDescription;
-
+    public partial string VersionDescription { get; set; }
     public ICommand SwitchThemeCommand
     {
         get;
@@ -31,19 +30,21 @@ public partial class SettingsViewModel : BaseViewModel
     public SettingsViewModel(IThemeSelectorService themeSelectorService)
     {
         _themeSelectorService = themeSelectorService;
-        _elementTheme = _themeSelectorService.Theme;
-        _versionDescription = GetVersionDescription();
-
-        SwitchThemeCommand = new RelayCommand<ElementTheme>(
-            async (param) =>
-            {
-                if (ElementTheme != param)
-                {
-                    ElementTheme = param;
-                    await _themeSelectorService.SetThemeAsync(param);
-                }
-            });
+        ElementTheme = _themeSelectorService.Theme;
+        VersionDescription = GetVersionDescription();
     }
+
+
+    [RelayCommand]
+    private async Task SwitchThemeAsync(ElementTheme param)
+    {
+        if (ElementTheme != param)
+        {
+            ElementTheme = param;
+            await _themeSelectorService.SetThemeAsync(param);
+        }
+    }
+
 
     private static string GetVersionDescription()
     {
