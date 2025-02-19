@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "SuperWinUtils (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "SuperWinUtils (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
