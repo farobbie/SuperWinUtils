@@ -5,8 +5,6 @@ using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Helpers;
 using SuperWinUtils.Helpers;
 using SuperWinUtils.Models;
-
-using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace SuperWinUtils.Services;

@@ -1,10 +1,8 @@
 ﻿using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
-using Microsoft.Windows.AppNotifications;
 
 using SuperWinUtils.Contracts.Services;
-using SuperWinUtils.ViewModels;
 
 namespace SuperWinUtils.Activation;
 
@@ -19,10 +17,7 @@ public class AppNotificationActivationHandler : ActivationHandler<LaunchActivate
         _notificationService = notificationService;
     }
 
-    protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
-    {
-        return AppInstance.GetCurrent().GetActivatedEventArgs()?.Kind == ExtendedActivationKind.AppNotification;
-    }
+    protected override bool CanHandleInternal(LaunchActivatedEventArgs args) => AppInstance.GetCurrent().GetActivatedEventArgs()?.Kind == ExtendedActivationKind.AppNotification;
 
     protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {

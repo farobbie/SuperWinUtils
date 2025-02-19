@@ -4,7 +4,6 @@ using System.Web;
 using Microsoft.Windows.AppNotifications;
 
 using SuperWinUtils.Contracts.Services;
-using SuperWinUtils.ViewModels;
 
 namespace SuperWinUtils.Notifications;
 
@@ -59,13 +58,7 @@ public class AppNotificationService : IAppNotificationService
         return appNotification.Id != 0;
     }
 
-    public NameValueCollection ParseArguments(string arguments)
-    {
-        return HttpUtility.ParseQueryString(arguments);
-    }
+    public NameValueCollection ParseArguments(string arguments) => HttpUtility.ParseQueryString(arguments);
 
-    public void Unregister()
-    {
-        AppNotificationManager.Default.Unregister();
-    }
+    public void Unregister() => AppNotificationManager.Default.Unregister();
 }

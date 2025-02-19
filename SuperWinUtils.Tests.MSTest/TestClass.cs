@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-
-using Microsoft.UI.Xaml.Controls;
-
-namespace SuperWinUtils.Tests.MSTest;
+﻿namespace SuperWinUtils.Tests.MSTest;
 
 // TODO: Write unit tests.
 // https://docs.microsoft.com/visualstudio/test/getting-started-with-unit-testing
@@ -13,38 +9,20 @@ namespace SuperWinUtils.Tests.MSTest;
 public class TestClass
 {
     [ClassInitialize]
-    public static void ClassInitialize(TestContext context)
-    {
-        Debug.WriteLine("ClassInitialize");
-    }
+    public static void ClassInitialize(TestContext context) => Debug.WriteLine("ClassInitialize");
 
     [ClassCleanup]
-    public static void ClassCleanup()
-    {
-        Debug.WriteLine("ClassCleanup");
-    }
+    public static void ClassCleanup() => Debug.WriteLine("ClassCleanup");
 
     [TestInitialize]
-    public void TestInitialize()
-    {
-        Debug.WriteLine("TestInitialize");
-    }
+    public void TestInitialize() => Debug.WriteLine("TestInitialize");
 
     [TestCleanup]
-    public void TestCleanup()
-    {
-        Debug.WriteLine("TestCleanup");
-    }
+    public void TestCleanup() => Debug.WriteLine("TestCleanup");
 
     [TestMethod]
-    public void TestMethod()
-    {
-        Assert.IsTrue(true);
-    }
+    public void TestMethod() => Assert.IsTrue(true);
 
     [UITestMethod]
-    public void UITestMethod()
-    {
-        Assert.AreEqual(0, new Grid().ActualWidth);
-    }
+    public void UITestMethod() => Assert.AreEqual(0, new Grid().ActualWidth);
 }
