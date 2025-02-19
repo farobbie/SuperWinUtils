@@ -22,10 +22,6 @@ public partial class SettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     public partial string VersionDescription { get; set; }
-    public ICommand SwitchThemeCommand
-    {
-        get;
-    }
 
     public SettingsViewModel(IThemeSelectorService themeSelectorService)
     {
