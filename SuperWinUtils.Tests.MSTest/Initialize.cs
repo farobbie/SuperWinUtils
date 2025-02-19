@@ -1,4 +1,8 @@
-﻿[assembly: WinUITestTarget(typeof(SuperWinUtils.App))]
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
+using Microsoft.Windows.ApplicationModel.DynamicDependency;
+
+[assembly: WinUITestTarget(typeof(SuperWinUtils.App))]
 
 namespace SuperWinUtils.Tests.MSTest;
 

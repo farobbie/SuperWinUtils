@@ -1,4 +1,9 @@
-﻿namespace SuperWinUtils.Tests.MSTest;
+﻿using System.Diagnostics;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
+
+namespace SuperWinUtils.Tests.MSTest;
 
 // TODO: Write unit tests.
 // https://docs.microsoft.com/visualstudio/test/getting-started-with-unit-testing
