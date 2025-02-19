@@ -7,7 +7,7 @@ using SuperWinUtils.Views;
 
 namespace SuperWinUtils.ViewModels;
 
-public partial class ShellViewModel : ObservableRecipient
+public partial class ShellViewModel : BaseViewModel
 {
     [ObservableProperty]
     private bool isBackEnabled;

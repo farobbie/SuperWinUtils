@@ -13,7 +13,7 @@ using Windows.ApplicationModel;
 
 namespace SuperWinUtils.ViewModels;
 
-public partial class SettingsViewModel : ObservableRecipient
+public partial class SettingsViewModel : BaseViewModel
 {
     private readonly IThemeSelectorService _themeSelectorService;
 

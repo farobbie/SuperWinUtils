@@ -2,7 +2,7 @@
 
 namespace SuperWinUtils.ViewModels;
 
-public partial class MainViewModel : ObservableRecipient
+public partial class MainViewModel : BaseViewModel
 {
     public MainViewModel()
     {
