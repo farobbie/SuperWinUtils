@@ -5,9 +5,9 @@ namespace SuperWinUtils.Helpers;
 
 public class DialogHelper
 {
-    private static async Task ShowMessageDialogAsync(string title, object message, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK")
+    private static ContentDialog CreateContentDialog(string title, object message, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK")
     {
-        var dialog = new ContentDialog
+        return new ContentDialog
         {
             XamlRoot = ((FrameworkElement)App.MainWindow.Content).XamlRoot,
             RequestedTheme = ((FrameworkElement)App.MainWindow.Content).RequestedTheme,
@@ -18,32 +18,23 @@ public class DialogHelper
             CloseButtonText = closeButtonText,
 
         };
-        await dialog.ShowAsync();
-
     }
 
     public static async Task ShowAlertDialogAsync(string message)
     {
-        await ShowMessageDialogAsync("Error", message, string.Empty, string.Empty);
+        var dialog = CreateContentDialog("Alert", message, string.Empty, string.Empty);
+        await dialog.ShowAsync();
     }
 
     public static async Task ShowWarningDialogAsync(string message)
     {
-        await ShowMessageDialogAsync("Warning", message, string.Empty, string.Empty);
+        var dialog = CreateContentDialog("Warning", message, string.Empty, string.Empty);
+        await dialog.ShowAsync();
     }
 
     public static async Task<ContentDialogResult> ShowOptionMessageDialogAsync(string title, string content, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK")
     {
-        var dialog = new ContentDialog
-        {
-            XamlRoot = ((FrameworkElement)App.MainWindow.Content).XamlRoot,
-            RequestedTheme = ((FrameworkElement)App.MainWindow.Content).RequestedTheme,
-            Title = title,
-            Content = content,
-            PrimaryButtonText = primaryButtonText,
-            SecondaryButtonText = secondaryButtonText,
-            CloseButtonText = closeButtonText,
-        };
+        var dialog = CreateContentDialog(title, content, primaryButtonText, secondaryButtonText, closeButtonText);
         return await dialog.ShowAsync();
     }
 
@@ -58,16 +49,7 @@ public class DialogHelper
             SelectionStart = defaultText.Length,
         };
 
-        var dialog = new ContentDialog
-        {
-            XamlRoot = ((FrameworkElement)App.MainWindow.Content).XamlRoot,
-            RequestedTheme = ((FrameworkElement)App.MainWindow.Content).RequestedTheme,
-            Title = title,
-            Content = inputTextBox,
-            PrimaryButtonText = primaryButtonText,
-            SecondaryButtonText = secondaryButtonText,
-            CloseButtonText = closeButtonText,
-        };
+        var dialog = CreateContentDialog(title, inputTextBox, primaryButtonText, secondaryButtonText, closeButtonText);
         return await dialog.ShowAsync();
     }
 }
