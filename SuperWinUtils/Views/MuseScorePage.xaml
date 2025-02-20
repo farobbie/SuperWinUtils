@@ -7,6 +7,9 @@
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        
+        <Button Content="Download MuseScore"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+				Command="{x:Bind ViewModel.DownloadCommand}"/>
     </Grid>
 </Page>

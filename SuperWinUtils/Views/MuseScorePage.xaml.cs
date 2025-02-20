@@ -6,10 +6,7 @@ namespace SuperWinUtils.Views;
 
 public sealed partial class MuseScorePage : Page
 {
-    public MuseScoreViewModel ViewModel
-    {
-        get;
-    }
+    public MuseScoreViewModel ViewModel { get; }
 
     public MuseScorePage()
     {
