@@ -9,8 +9,9 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     Loaded="OnLoaded">
 
-    <Grid>
+    <Grid RowDefinitions="*, Auto">
         <Grid x:Name="AppTitleBar"
+              Grid.Row="0"
               Canvas.ZIndex="1"
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
               IsHitTestVisible="True"
@@ -27,6 +28,7 @@
         </Grid>
         <NavigationView
             x:Name="NavigationViewControl"
+            Grid.Row="0"
             Canvas.ZIndex="0"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
@@ -76,5 +78,6 @@
                 <Frame x:Name="NavigationFrame" />
             </Grid>
         </NavigationView>
+        <TextBlock Grid.Row="1" Text="TEST" Margin="10" />
     </Grid>
 </Page>
