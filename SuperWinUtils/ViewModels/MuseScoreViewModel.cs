@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using SuperWinUtils.Helpers;
 
 namespace SuperWinUtils.ViewModels;
