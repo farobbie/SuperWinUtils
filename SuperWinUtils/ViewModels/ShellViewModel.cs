@@ -17,6 +17,11 @@ public partial class ShellViewModel : BaseViewModel
     [ObservableProperty]
     public partial object? Selected { get; set; }
 
+
+    [ObservableProperty]
+    public partial string StatusMessage { get; set; }
+
+
     public INavigationService NavigationService { get; }
 
     public INavigationViewService NavigationViewService { get; }
@@ -26,6 +31,9 @@ public partial class ShellViewModel : BaseViewModel
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
         NavigationViewService = navigationViewService;
+
+        StatusMessage = string.Empty;
+        _statusService.StatusProgress = new Progress<string>(msg => StatusMessage = msg);
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e)
