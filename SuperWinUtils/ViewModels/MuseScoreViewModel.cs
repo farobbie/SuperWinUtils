@@ -25,6 +25,10 @@ public partial class MuseScoreViewModel : BaseViewModel
 
             IsBusy = true;
 
+            // TODO: Implement download logic
+
+            // TODO: Implement extract logic
+
         }
         catch (Exception ex)
         {
