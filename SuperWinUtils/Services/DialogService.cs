@@ -1,9 +1,10 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using SuperWinUtils.Contracts.Services;
 
-namespace SuperWinUtils.Helpers;
+namespace SuperWinUtils.Services;
 
-public class DialogHelper
+public class DialogService : IDialogService
 {
     private static ContentDialog CreateContentDialog(string title, object message, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK")
     {
@@ -20,29 +21,29 @@ public class DialogHelper
         };
     }
 
-    public static async Task ShowAlertDialogAsync(string message)
+    public async Task ShowAlertDialogAsync(string message)
     {
         var dialog = CreateContentDialog("Alert", message, string.Empty, string.Empty);
         await dialog.ShowAsync();
     }
 
-    public static async Task ShowWarningDialogAsync(string message)
+    public async Task ShowWarningDialogAsync(string message)
     {
         var dialog = CreateContentDialog("Warning", message, string.Empty, string.Empty);
         await dialog.ShowAsync();
     }
 
-    public static async Task<ContentDialogResult> ShowOptionMessageDialogAsync(string title, string content, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK")
+    public async Task<ContentDialogResult> ShowOptionMessageDialogAsync(string title, string content, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK")
     {
         var dialog = CreateContentDialog(title, content, primaryButtonText, secondaryButtonText, closeButtonText);
         return await dialog.ShowAsync();
     }
 
-    public static async Task<ContentDialogResult> InputStringDialogAsync(string title, string defaultText, string primaryButtonText, string secondaryButtonText, string closeButtonText = "Cancel")
+    public async Task<ContentDialogResult> InputStringDialogAsync(string title, string defaultText, string primaryButtonText, string secondaryButtonText, string closeButtonText = "Cancel")
     {
         var inputTextBox = new TextBox
         {
-            XamlRoot = App.MainWindow.Content.XamlRoot,
+            XamlRoot = ((FrameworkElement)App.MainWindow.Content).XamlRoot,
             AcceptsReturn = false,
             Height = 32,
             Text = defaultText,
@@ -52,4 +53,5 @@ public class DialogHelper
         var dialog = CreateContentDialog(title, inputTextBox, primaryButtonText, secondaryButtonText, closeButtonText);
         return await dialog.ShowAsync();
     }
+
 }

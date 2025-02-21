@@ -6,7 +6,6 @@ using SuperWinUtils.Activation;
 using SuperWinUtils.Contracts.Services;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Services;
-using SuperWinUtils.Helpers;
 using SuperWinUtils.Models;
 using SuperWinUtils.Notifications;
 using SuperWinUtils.Services;
@@ -72,6 +71,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<IStatusService, StatusService>();
+            services.AddSingleton<IDialogService, DialogService>();
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();

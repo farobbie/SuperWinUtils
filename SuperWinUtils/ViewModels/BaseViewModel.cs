@@ -6,6 +6,7 @@ namespace SuperWinUtils.ViewModels;
 public partial class BaseViewModel : ObservableRecipient
 {
     protected readonly IStatusService _statusService = App.GetService<IStatusService>();
+    protected readonly IDialogService _dialogService = App.GetService<IDialogService>();
 
     [ObservableProperty]
     public partial string? Title { get; set; }

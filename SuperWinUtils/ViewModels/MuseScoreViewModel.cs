@@ -30,7 +30,6 @@ public partial class MuseScoreViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await DialogHelper.ShowAlertDialogAsync($"{ex.Message}");
         }
         finally
         {

@@ -52,7 +52,7 @@ public class AppNotificationService : IAppNotificationService
     public bool Show(string payload)
     {
         var appNotification = new AppNotification(payload);
-
+        
         AppNotificationManager.Default.Show(appNotification);
 
         return appNotification.Id != 0;
