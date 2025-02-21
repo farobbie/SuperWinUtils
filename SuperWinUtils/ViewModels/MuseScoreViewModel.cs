@@ -30,10 +30,12 @@ public partial class MuseScoreViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
+            await _dialogService.ShowAlertDialogAsync(ex.Message);
         }
         finally
         {
             IsBusy = false;
+            await UpdateStatus("Ready downloading MuseScore");
         }
     }
 
