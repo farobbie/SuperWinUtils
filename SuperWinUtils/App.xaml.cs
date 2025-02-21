@@ -74,9 +74,12 @@ public partial class App : Application
             services.AddSingleton<IDialogService, DialogService>();
 
             // Core Services
+            services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<WaterMeterReaderViewModel>();
+            services.AddTransient<WaterMeterReaderPage>();
             services.AddTransient<MuseScoreViewModel>();
             services.AddTransient<MuseScorePage>();
             services.AddTransient<SettingsViewModel>();

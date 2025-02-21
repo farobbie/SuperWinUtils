@@ -111,4 +111,7 @@
   <data name="Shell_MuseScore.Content" xml:space="preserve">
     <value>MuseScore</value>
   </data>
+  <data name="Shell_WaterMeterReader.Content" xml:space="preserve">
+    <value>WaterMeterReader</value>
+  </data>
 </root>

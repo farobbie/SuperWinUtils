@@ -17,6 +17,7 @@ public class PageService : IPageService
         Configure<MainViewModel, MainPage>();
         Configure<SettingsViewModel, SettingsPage>();
         Configure<MuseScoreViewModel, MuseScorePage>();
+        Configure<WaterMeterReaderViewModel, WaterMeterReaderPage>();
     }
 
     public Type GetPageType(string key)
