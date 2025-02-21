@@ -6,9 +6,9 @@ public partial class StatusService : IStatusService
 {
     public required IProgress<string> StatusProgress { get; set; }
 
-    public async Task UpdateMessage(string message)
+    public Task UpdateMessage(string message)
     {
-        await Task.Yield();
         StatusProgress?.Report(message);
+        return Task.CompletedTask;
     }
 }
