@@ -21,8 +21,8 @@ public partial class BaseViewModel : ObservableRecipient
         
     }
 
-    protected async Task UpdateStatus(string statusMessage)
+    protected async Task ReportStatus(string statusMessage)
     {
-        await _statusService.UpdateMessage($"{Title}: {statusMessage}");
+        await _statusService.Report($"{Title}: {statusMessage}");
     }
 }

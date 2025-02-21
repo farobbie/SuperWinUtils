@@ -35,7 +35,7 @@ public partial class MuseScoreViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
-            await UpdateStatus("Ready downloading MuseScore");
+            await ReportStatus("Ready downloading MuseScore");
         }
     }
 
