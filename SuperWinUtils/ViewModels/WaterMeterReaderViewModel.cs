@@ -12,7 +12,7 @@ public partial class WaterMeterReaderViewModel : ObservableRecipient, INavigatio
 {
     private readonly ISampleDataService _sampleDataService;
 
-    public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
+    public ObservableCollection<WaterMeterReaderData> Source { get; } = [];
 
     public WaterMeterReaderViewModel(ISampleDataService sampleDataService)
     {
@@ -23,7 +23,6 @@ public partial class WaterMeterReaderViewModel : ObservableRecipient, INavigatio
     {
         Source.Clear();
 
-        // TODO: Replace with real data.
         var data = await _sampleDataService.GetGridDataAsync();
 
         foreach (var item in data)

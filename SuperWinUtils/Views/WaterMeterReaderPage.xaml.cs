@@ -8,10 +8,7 @@ namespace SuperWinUtils.Views;
 // For more details, see the documentation at https://docs.microsoft.com/windows/communitytoolkit/controls/datagrid.
 public sealed partial class WaterMeterReaderPage : Page
 {
-    public WaterMeterReaderViewModel ViewModel
-    {
-        get;
-    }
+    public WaterMeterReaderViewModel ViewModel { get; }
 
     public WaterMeterReaderPage()
     {
