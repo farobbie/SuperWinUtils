@@ -8,6 +8,6 @@ public class WaterMeterReaderData
 
     public int TotalWater => ColdWater + WarmWater;
 
-    public int ColdWaterDifference { get; set; }
-    public int WarmWaterDifference { get; set; }
+    public int? ColdWaterDifference { get; set; } = null;
+    public int? WarmWaterDifference { get; set; } = null;
 }
