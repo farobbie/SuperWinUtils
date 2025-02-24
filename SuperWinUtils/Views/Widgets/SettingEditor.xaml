@@ -7,14 +7,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <Grid>
-        <StackPanel Orientation="Horizontal" Margin="5">
-            <TextBox Header="{x:Bind Header}" Text="{x:Bind Value, Mode=TwoWay}" Width="200" CornerRadius="2,0,0,2"/>
-            <Button Content="S" CornerRadius="0,0,0,0" Margin="3,26,0,0"
-                Command="{x:Bind SaveCommand}" CommandParameter="{x:Bind CommandParameter}"/>
-            <Button Content="R" CornerRadius="0,2,2,0" Margin="3,26,0,0"
-                Command="{x:Bind ResetCommand}" CommandParameter="{x:Bind CommandParameter}"/>
-        </StackPanel>
-    </Grid>
+    
+    <StackPanel Orientation="Horizontal" Margin="5">
+        <TextBox Header="{x:Bind Header}" Text="{x:Bind Value, Mode=TwoWay}" Width="200" CornerRadius="2,0,0,2"/>
+        <Button Content="S" CornerRadius="0,0,0,0" Margin="3,26,0,0"
+            Command="{x:Bind SaveCommand}" CommandParameter="{x:Bind CommandParameter}"/>
+        <Button Content="R" CornerRadius="0,2,2,0" Margin="3,26,0,0"
+            Command="{x:Bind ResetCommand}" CommandParameter="{x:Bind CommandParameter}"/>
+    </StackPanel>
+    
 </UserControl>
