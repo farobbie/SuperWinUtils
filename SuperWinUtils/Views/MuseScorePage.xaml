@@ -4,12 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercontrols="using:SuperWinUtils.Views.Widgets"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        <Button Content="Download MuseScore"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-				Command="{x:Bind ViewModel.DownloadCommand}"/>
+		<StackPanel x:Name="MuseScoreStackPanel" x:Uid="MuseScoreStackPanel">
+			<usercontrols:SettingEditor Margin="5"
+										Name="SourceFileUrl"
+										Header="SourceFile Url"/>
+			<Button Content="Download MuseScore"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Command="{x:Bind ViewModel.DownloadCommand}"/>
+		</StackPanel>
     </Grid>
 </Page>
