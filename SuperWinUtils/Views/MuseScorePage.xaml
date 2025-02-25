@@ -11,7 +11,25 @@
 		<StackPanel x:Name="MuseScoreStackPanel" x:Uid="MuseScoreStackPanel">
 			<usercontrols:SettingEditor Margin="5"
 										Name="SourceFileUrl"
-										Header="SourceFile Url"/>
+										Header="SourceFile Url"
+                                        Value="{x:Bind ViewModel.SourceFileUrl}"
+                                        SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
+                                        ResetCommand="{x:Bind ViewModel.ResetSettingCommand}"
+                                        CommandParameter="SourceFileUrl"/>
+			<usercontrols:SettingEditor Margin="5"
+										Name="SourceFilePath"
+										Header="SourceFile Path"
+                                        Value="{x:Bind ViewModel.SourceFilePath}"
+                                        SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
+                                        ResetCommand="{x:Bind ViewModel.ResetSettingCommand}"
+                                        CommandParameter="SourceFilePath"/>
+			<usercontrols:SettingEditor Margin="5"
+										Name="DestinationFileUrl"
+										Header="DestinationFile Url"
+                                        Value="{x:Bind ViewModel.DestinationFilePath}"
+                                        SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
+                                        ResetCommand="{x:Bind ViewModel.ResetSettingCommand}"
+                                        CommandParameter="DestinationFileUrl"/>
 			<Button Content="Download MuseScore"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"
