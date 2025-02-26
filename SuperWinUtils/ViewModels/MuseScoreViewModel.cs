@@ -11,6 +11,7 @@ public partial class MuseScoreViewModel : BaseViewModel
 {
     private readonly ILocalSettingsService _localSettingsService;
     private readonly IFileExchangeService _fileExchangeService;
+    private readonly IArchiveService _archiveService;
 
     private const string _settingsKeySourceFileUrl = "MuseScore_SourceFileUrl";
     private const string _settingsKeySourceFilePath = "MuseScore_SourceFilePath";
@@ -31,11 +32,12 @@ public partial class MuseScoreViewModel : BaseViewModel
 
     private readonly CancellationTokenSource _cancellationTokenSource;
 
-    public MuseScoreViewModel(ILocalSettingsService localSettingsService, IFileExchangeService fileExchangeService)
+    public MuseScoreViewModel(ILocalSettingsService localSettingsService, IFileExchangeService fileExchangeService, IArchiveService archiveService)
     {
         Title = "MuseScore";
         _localSettingsService = localSettingsService;
         _fileExchangeService = fileExchangeService;
+        _archiveService = archiveService;
 
         SourceFileUrl = _defaultSourceFileUrl;
         SourceFilePath = _defaultSourceFilePath;
@@ -73,19 +75,27 @@ public partial class MuseScoreViewModel : BaseViewModel
             IsBusy = true;
 
             // Download MuseScore
-            var progress = new Progress<DownloadProgress>();
-            progress.ProgressChanged += async (_, data) =>
+            var progressDownload = new Progress<DownloadProgress>();
+            progressDownload.ProgressChanged += async (_, data) =>
             {
                 var progressPercentage = data.Progress * 100;
                 await ReportStatus($"Downloading MuseScore: {progressPercentage}%");
             };
 
-            await _fileExchangeService.DownloadFileAsync(SourceFileUrl, SourceFilePath, progress, _cancellationTokenSource.Token);
+            await _fileExchangeService.DownloadFileAsync(SourceFileUrl, SourceFilePath, progressDownload, _cancellationTokenSource.Token);
 
-            await ReportStatus("Download MuseScore");
+            await ReportStatus("Downloaded MuseScore");
 
-            // TODO: Implement extract logic
+            // Extract MuseScore
+            var progressArchive = new Progress<double>();
+            progressArchive.ProgressChanged += async (_, data) =>
+            {
+                await ReportStatus($"Extracting MuseScore: {data}%");
+            };
 
+            await _archiveService.ExtractFileToAsync(SourceFilePath, DestinationFilePath, progressArchive, _cancellationTokenSource.Token);
+
+            await ReportStatus("Extracted MuseScore");
         }
         catch (Exception ex)
         {
