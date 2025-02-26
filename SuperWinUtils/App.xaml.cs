@@ -54,6 +54,8 @@ public partial class App : Application
         UseContentRoot(AppContext.BaseDirectory).
         ConfigureServices((context, services) =>
         {
+            services.AddHttpClient();
+
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
