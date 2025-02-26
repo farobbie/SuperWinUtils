@@ -73,7 +73,7 @@ public partial class MuseScoreViewModel : BaseViewModel
             IsBusy = true;
 
             var progress = new Progress<DownloadProgress>();
-
+            await _fileExchangeService.DownloadFileAsync(SourceFileUrl, SourceFilePath, progress, _cancellationTokenSource.Token);
 
 
             // TODO: Implement extract logic
@@ -89,8 +89,6 @@ public partial class MuseScoreViewModel : BaseViewModel
             await ReportStatus("Ready downloading MuseScore");
         }
     }
-
-    private void Progress_ProgressChanged(object? sender, DownloadProgress e) => throw new NotImplementedException();
 
     [RelayCommand]
     private async Task SaveSettingAsync(string setting)
