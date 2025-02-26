@@ -75,12 +75,12 @@ public partial class MuseScoreViewModel : BaseViewModel
             IsBusy = true;
 
             // Download MuseScore
-            await DownloadMuseScoreFile();
+            await DownloadMuseScoreFileAsync();
 
             await ReportStatus("Downloaded MuseScore");
 
             // Extract MuseScore
-            await ExtractMuseScoreFile();
+            await ExtractMuseScoreFileAsync();
 
             await ReportStatus("Extracted MuseScore");
         }
@@ -95,7 +95,7 @@ public partial class MuseScoreViewModel : BaseViewModel
         }
     }
 
-    private async Task ExtractMuseScoreFile()
+    private async Task ExtractMuseScoreFileAsync()
     {
         var progressArchive = new Progress<double>();
         progressArchive.ProgressChanged += async (_, data) =>
@@ -107,7 +107,7 @@ public partial class MuseScoreViewModel : BaseViewModel
 
     }
 
-    private async Task DownloadMuseScoreFile()
+    private async Task DownloadMuseScoreFileAsync()
     {
         var progressDownload = new Progress<DownloadProgress>();
         progressDownload.ProgressChanged += async (_, data) =>
