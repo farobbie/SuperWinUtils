@@ -41,6 +41,7 @@ public partial class MuseScoreViewModel : BaseViewModel
         SourceFileUrl = _defaultSourceFileUrl;
         SourceFilePath = _defaultSourceFilePath;
         DestinationFilePath = _defaultDestinationFilePath;
+        _cancellationTokenSource = new();
         
         _ = InitializeAsync();
     }
@@ -72,9 +73,17 @@ public partial class MuseScoreViewModel : BaseViewModel
 
             IsBusy = true;
 
+            // Download MuseScore
             var progress = new Progress<DownloadProgress>();
+            progress.ProgressChanged += async (_, data) =>
+            {
+                var progressPercentage = data.Progress * 100;
+                await ReportStatus($"Downloading MuseScore: {progressPercentage}%");
+            };
+
             await _fileExchangeService.DownloadFileAsync(SourceFileUrl, SourceFilePath, progress, _cancellationTokenSource.Token);
 
+            await ReportStatus("Download MuseScore");
 
             // TODO: Implement extract logic
 
