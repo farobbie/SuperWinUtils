@@ -75,25 +75,12 @@ public partial class MuseScoreViewModel : BaseViewModel
             IsBusy = true;
 
             // Download MuseScore
-            var progressDownload = new Progress<DownloadProgress>();
-            progressDownload.ProgressChanged += async (_, data) =>
-            {
-                var progressPercentage = data.Progress * 100;
-                await ReportStatus($"Downloading MuseScore: {progressPercentage}%");
-            };
-
-            await _fileExchangeService.DownloadFileAsync(SourceFileUrl, SourceFilePath, progressDownload, _cancellationTokenSource.Token);
+            await DownloadMuseScoreFile();
 
             await ReportStatus("Downloaded MuseScore");
 
             // Extract MuseScore
-            var progressArchive = new Progress<double>();
-            progressArchive.ProgressChanged += async (_, data) =>
-            {
-                await ReportStatus($"Extracting MuseScore: {data}%");
-            };
-
-            await _archiveService.ExtractFileToAsync(SourceFilePath, DestinationFilePath, progressArchive, _cancellationTokenSource.Token);
+            await ExtractMuseScoreFile();
 
             await ReportStatus("Extracted MuseScore");
         }
@@ -108,6 +95,29 @@ public partial class MuseScoreViewModel : BaseViewModel
         }
     }
 
+    private async Task ExtractMuseScoreFile()
+    {
+        var progressArchive = new Progress<double>();
+        progressArchive.ProgressChanged += async (_, data) =>
+        {
+            await ReportStatus($"Extracting MuseScore: {data}%");
+        };
+
+        await _archiveService.ExtractFileToAsync(SourceFilePath, DestinationFilePath, progressArchive, _cancellationTokenSource.Token);
+
+    }
+
+    private async Task DownloadMuseScoreFile()
+    {
+        var progressDownload = new Progress<DownloadProgress>();
+        progressDownload.ProgressChanged += async (_, data) =>
+        {
+            var progressPercentage = data.Progress * 100;
+            await ReportStatus($"Downloading MuseScore: {progressPercentage}%");
+        };
+
+        await _fileExchangeService.DownloadFileAsync(SourceFileUrl, SourceFilePath, progressDownload, _cancellationTokenSource.Token);
+    }
 
     [RelayCommand]
     private async Task CancelDownloadAsync()
