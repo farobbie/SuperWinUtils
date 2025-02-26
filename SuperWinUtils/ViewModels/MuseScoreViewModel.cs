@@ -99,6 +99,14 @@ public partial class MuseScoreViewModel : BaseViewModel
         }
     }
 
+
+    [RelayCommand]
+    private async Task CancelDownloadAsync()
+    {
+        await _cancellationTokenSource.CancelAsync();
+    }
+
+
     [RelayCommand]
     private async Task SaveSettingAsync(string setting)
     {
