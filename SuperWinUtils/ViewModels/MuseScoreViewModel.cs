@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using SuperWinUtils.Contracts.Services;
+using SuperWinUtils.Core.Contracts.Services;
+using SuperWinUtils.Core.Models;
 using SuperWinUtils.Helpers;
 
 namespace SuperWinUtils.ViewModels;
@@ -9,6 +11,7 @@ namespace SuperWinUtils.ViewModels;
 public partial class MuseScoreViewModel : BaseViewModel
 {
     private readonly ILocalSettingsService _localSettingsService;
+    private readonly IFileExchangeService _fileExchangeService;
 
     private const string _settingsKeySourceFileUrl = "MuseScore_SourceFileUrl";
     private const string _settingsKeySourceFilePath = "MuseScore_SourceFilePath";
@@ -27,10 +30,13 @@ public partial class MuseScoreViewModel : BaseViewModel
     [ObservableProperty]
     public partial string DestinationFilePath { get; set; }
 
-    public MuseScoreViewModel(ILocalSettingsService localSettingsService)
+    private readonly CancellationTokenSource _cancellationTokenSource;
+
+    public MuseScoreViewModel(ILocalSettingsService localSettingsService, IFileExchangeService fileExchangeService)
     {
         Title = "MuseScore";
         _localSettingsService = localSettingsService;
+        _fileExchangeService = fileExchangeService;
 
         SourceFileUrl = _defaultSourceFileUrl;
         SourceFilePath = _defaultSourceFilePath;
@@ -66,7 +72,9 @@ public partial class MuseScoreViewModel : BaseViewModel
 
             IsBusy = true;
 
-            // TODO: Implement download logic
+            var progress = new Progress<DownloadProgress>();
+
+
 
             // TODO: Implement extract logic
 
@@ -82,6 +90,7 @@ public partial class MuseScoreViewModel : BaseViewModel
         }
     }
 
+    private void Progress_ProgressChanged(object? sender, DownloadProgress e) => throw new NotImplementedException();
 
     [RelayCommand]
     private async Task SaveSettingAsync(string setting)

@@ -78,6 +78,7 @@ public partial class App : Application
             // Core Services
             services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
+            services.AddSingleton<IFileExchangeService, FileExchangeService>();
 
             // Views and ViewModels
             services.AddTransient<WaterMeterReaderViewModel>();
