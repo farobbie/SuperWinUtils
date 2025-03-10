@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Imaging;
 using SuperWinUtils.Contracts.Services;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Models;
@@ -31,6 +32,16 @@ public partial class MuseScoreViewModel : BaseViewModel
     [ObservableProperty]
     public partial string DestinationFilePath { get; set; }
 
+
+    [ObservableProperty]
+    public partial BitmapImage SaveImage { get; set; }
+
+
+    [ObservableProperty]
+    public partial BitmapImage ResetToDefaultImage { get; set; }
+
+
+
     private readonly CancellationTokenSource _cancellationTokenSource;
 
     public MuseScoreViewModel(ILocalSettingsService localSettingsService, IFileExchangeService fileExchangeService, IArchiveService archiveService)
@@ -47,6 +58,9 @@ public partial class MuseScoreViewModel : BaseViewModel
         
         _ = InitializeAsync();
 
+        var currentTheme = App.Current.RequestedTheme;
+        SaveImage = new BitmapImage(new Uri($"ms-appx:///Assets/Save{currentTheme}.png"));
+        ResetToDefaultImage = new BitmapImage(new Uri($"ms-appx:///Assets/ResetToDefault{currentTheme}.png"));
         _ = AddThemeActionAsync(OnThemeChanged);
     }
 
@@ -174,5 +188,9 @@ public partial class MuseScoreViewModel : BaseViewModel
 
     public void OnThemeChanged(ElementTheme theme)
     {
+        var themeStr = theme == ElementTheme.Dark ? "Dark" : "Light";
+
+        SaveImage = new BitmapImage(new Uri($"ms-appx:///Assets/Save{themeStr}.png"));
+        ResetToDefaultImage = new BitmapImage(new Uri($"ms-appx:///Assets/ResetToDefault{themeStr}.png"));
     }
 }
