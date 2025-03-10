@@ -26,7 +26,7 @@
                                         ResetCommand="{x:Bind ViewModel.ResetSettingCommand}"
                                         CommandParameter="SourceFilePath"
                                         SaveImage="{x:Bind ViewModel.SaveImage}"
-                                        ResetImage="{x:Bind ViewModel.ResetToDefaultImage}/>
+                                        ResetImage="{x:Bind ViewModel.ResetToDefaultImage}"/>
 			<usercontrols:SettingEditor Margin="5"
 										Name="DestinationFileUrl"
 										Header="DestinationFile Url"
@@ -35,7 +35,7 @@
                                         ResetCommand="{x:Bind ViewModel.ResetSettingCommand}"
                                         CommandParameter="DestinationFileUrl"
                                         SaveImage="{x:Bind ViewModel.SaveImage}"
-                                        ResetImage="{x:Bind ViewModel.ResetToDefaultImage}/>
+                                        ResetImage="{x:Bind ViewModel.ResetToDefaultImage}"/>
 			<Button Content="Download MuseScore"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"
