@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using SuperWinUtils.Contracts.Services;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Models;
@@ -45,6 +46,8 @@ public partial class MuseScoreViewModel : BaseViewModel
         _cancellationTokenSource = new();
         
         _ = InitializeAsync();
+
+        _ = AddThemeActionAsync(OnThemeChanged);
     }
 
     public async Task InitializeAsync()
@@ -167,5 +170,9 @@ public partial class MuseScoreViewModel : BaseViewModel
                 await ReportStatus($"Wrong Textbox! {setting}");
                 return;
         }
+    }
+
+    public void OnThemeChanged(ElementTheme theme)
+    {
     }
 }

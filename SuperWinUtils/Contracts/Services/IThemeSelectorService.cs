@@ -4,10 +4,9 @@ namespace SuperWinUtils.Contracts.Services;
 
 public interface IThemeSelectorService
 {
-    ElementTheme Theme
-    {
-        get;
-    }
+    ElementTheme Theme { get; }
+
+    Action<ElementTheme>? ThemeChanged { get; set; }
 
     Task InitializeAsync();
 

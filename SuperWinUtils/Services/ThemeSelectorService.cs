@@ -11,6 +11,8 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public ElementTheme Theme { get; set; } = ElementTheme.Default;
 
+    public Action<ElementTheme>? ThemeChanged { get; set; }
+
     private readonly ILocalSettingsService _localSettingsService;
 
     public ThemeSelectorService(ILocalSettingsService localSettingsService)
@@ -39,6 +41,7 @@ public class ThemeSelectorService : IThemeSelectorService
             rootElement.RequestedTheme = Theme;
 
             TitleBarHelper.UpdateTitleBar(Theme);
+            ThemeChanged?.Invoke(Theme);
         }
 
         await Task.CompletedTask;

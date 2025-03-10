@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml;
 using SuperWinUtils.Contracts.Services;
 
 namespace SuperWinUtils.ViewModels;
@@ -7,6 +8,7 @@ public partial class BaseViewModel : ObservableRecipient
 {
     protected readonly IStatusService _statusService = App.GetService<IStatusService>();
     protected readonly IDialogService _dialogService = App.GetService<IDialogService>();
+    private readonly IThemeSelectorService _themeSelectorService = App.GetService<IThemeSelectorService>();
 
     [ObservableProperty]
     public partial string? Title { get; set; }
@@ -24,5 +26,12 @@ public partial class BaseViewModel : ObservableRecipient
     protected async Task ReportStatus(string statusMessage)
     {
         await _statusService.Report($"{Title}: {statusMessage}");
+    }
+
+    protected async Task AddThemeActionAsync(Action<ElementTheme> themeAction)
+    {
+        _themeSelectorService.ThemeChanged += themeAction;
+
+        await Task.CompletedTask;
     }
 }
