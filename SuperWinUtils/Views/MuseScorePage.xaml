@@ -17,7 +17,7 @@
                                         ResetCommand="{x:Bind ViewModel.ResetSettingCommand}"
                                         CommandParameter="SourceFileUrl"
                                         SaveImage="{x:Bind ViewModel.SaveImage}"
-                                        ResetImage="{x:Bind ViewModel.ResetToDefaultImage}"//>
+                                        ResetImage="{x:Bind ViewModel.ResetToDefaultImage}"/>
 			<usercontrols:SettingEditor Margin="5"
 										Name="SourceFilePath"
 										Header="SourceFile Path"
