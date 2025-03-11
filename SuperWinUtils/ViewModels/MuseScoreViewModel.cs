@@ -188,8 +188,14 @@ public partial class MuseScoreViewModel : BaseViewModel
 
     public void OnThemeChanged(ElementTheme theme)
     {
-        var themeStr = theme == ElementTheme.Dark ? "Dark" : "Light";
-
+        var themeStr = theme switch
+        { 
+            ElementTheme.Dark => "Dark",
+            ElementTheme.Light => "Light",
+            ElementTheme.Default => "Dark",
+            _ => "Dark"
+        };
+        _ = ReportStatus($"Theme changed to {themeStr}");
         SaveImage = new BitmapImage(new Uri($"ms-appx:///Assets/Save{themeStr}.png"));
         ResetToDefaultImage = new BitmapImage(new Uri($"ms-appx:///Assets/ResetToDefault{themeStr}.png"));
     }

@@ -37,6 +37,20 @@
     <ProjectReference Include="..\SuperWinUtils.Core\SuperWinUtils.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Assets\ResetToDefaultDark.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\ResetToDefaultLight.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\SaveDark.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\SaveLight.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

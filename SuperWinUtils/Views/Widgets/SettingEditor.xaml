@@ -9,16 +9,16 @@
     mc:Ignorable="d">
     
     <StackPanel Orientation="Horizontal" Margin="5">
-        <TextBox Header="{x:Bind Header}" Text="{x:Bind Value, Mode=TwoWay}" Width="200" CornerRadius="2,0,0,2"/>
+        <TextBox Header="{x:Bind Header}" Text="{x:Bind Value, Mode=TwoWay}" Width="200" CornerRadius="2,0,0,2" />
         <Button CornerRadius="0,0,0,0" Margin="3,26,0,0" Width="32" Height="32"
                 ToolTipService.ToolTip="Save"
                 Command="{x:Bind SaveCommand}" CommandParameter="{x:Bind CommandParameter}">
-            <Image Source="{x:Bind SaveImage}" AutomationProperties.Name="Save" Stretch="Uniform"/>
+            <Image Source="{x:Bind SaveImage}" AutomationProperties.Name="Save" Stretch="UniformToFill"  />
         </Button>
         <Button CornerRadius="0,2,2,0" Margin="3,26,0,0" Width="32" Height="32"
                 ToolTipService.ToolTip="Reset to default"
                 Command="{x:Bind ResetCommand}" CommandParameter="{x:Bind CommandParameter}">
-            <Image Source="{x:Bind ResetImage}" AutomationProperties.Name="Save" Stretch="Uniform"/>
+            <Image Source="{x:Bind ResetImage}" AutomationProperties.Name="Save" Stretch="UniformToFill"/>
         </Button>
     </StackPanel>
     
