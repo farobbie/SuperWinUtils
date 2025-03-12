@@ -22,11 +22,15 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     public partial string VersionDescription { get; set; }
 
+    [ObservableProperty]
+    public partial string VersionWSDK { get; set; }
+
     public SettingsViewModel(IThemeSelectorService themeSelectorService)
     {
         _themeSelectorService = themeSelectorService;
         ElementTheme = _themeSelectorService.Theme;
         VersionDescription = GetVersionDescription();
+        VersionWSDK = GetAppVersion();
     }
 
 
@@ -57,5 +61,13 @@ public partial class SettingsViewModel : BaseViewModel
         }
 
         return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+    }
+
+    private string GetAppVersion()
+    {
+        return "";
+        //var assembly = Assembly.Load("Microsoft.WindowsAppRuntime.Bootstrap");
+        //var version = assembly?.GetName().Version;
+        //return version != null ? "Version: " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision : "Unbekannt";
     }
 }

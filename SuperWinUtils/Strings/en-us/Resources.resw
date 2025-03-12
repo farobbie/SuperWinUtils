@@ -182,4 +182,10 @@
   <data name="MuseScore_DestinationFilePath_Default" xml:space="preserve">
     <value>DestinationFilePath</value>
   </data>
+  <data name="SettingEditorSaveToolTip" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SettingEditorRestoreToolTip" xml:space="preserve">
+    <value>Restore</value>
+  </data>
 </root>

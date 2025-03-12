@@ -47,27 +47,27 @@ public sealed partial class SettingEditor : UserControl
     public static readonly DependencyProperty SaveCommandProperty =
         DependencyProperty.Register(nameof(SaveCommand), typeof(ICommand), typeof(SettingEditor), new PropertyMetadata(null));
 
-    public ICommand ResetCommand
+    public ICommand RestoreCommand
     {
-        get => (ICommand)GetValue(ResetCommandProperty);
-        set => SetValue(ResetCommandProperty, value);
+        get => (ICommand)GetValue(RestoreCommandProperty);
+        set => SetValue(RestoreCommandProperty, value);
     }
-    public static readonly DependencyProperty ResetCommandProperty =
-        DependencyProperty.Register(nameof(ResetCommand), typeof(ICommand), typeof(SettingEditor), new PropertyMetadata(null));
-    public ImageSource SaveImage
+    public static readonly DependencyProperty RestoreCommandProperty =
+        DependencyProperty.Register(nameof(RestoreCommand), typeof(ICommand), typeof(SettingEditor), new PropertyMetadata(null));
+    public string SaveToolTip
     {
-        get => (ImageSource)GetValue(SaveImageProperty);
-        set => SetValue(SaveImageProperty, value);
+        get => (string)GetValue(SaveToolTipProperty);
+        set => SetValue(SaveToolTipProperty, value);
     }
-    public static readonly DependencyProperty SaveImageProperty =
-        DependencyProperty.Register(nameof(SaveImage), typeof(ImageSource), typeof(SettingEditor), new PropertyMetadata(null));
+    public static readonly DependencyProperty SaveToolTipProperty =
+        DependencyProperty.Register(nameof(SaveToolTip), typeof(string), typeof(SettingEditor), new PropertyMetadata(string.Empty));
 
-    public ImageSource ResetImage
+    public string RestoreToolTip
     {
-        get => (ImageSource)GetValue(ResetImageProperty);
-        set => SetValue(ResetImageProperty, value);
+        get => (string)GetValue(RestoreToolTipProperty);
+        set => SetValue(RestoreToolTipProperty, value);
     }
-    public static readonly DependencyProperty ResetImageProperty =
-        DependencyProperty.Register(nameof(ResetImage), typeof(ImageSource), typeof(SettingEditor), new PropertyMetadata(null));
+    public static readonly DependencyProperty RestoreToolTipProperty =
+        DependencyProperty.Register(nameof(RestoreToolTip), typeof(string), typeof(SettingEditor), new PropertyMetadata(string.Empty));
 
 }
