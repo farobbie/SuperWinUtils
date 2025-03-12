@@ -8,8 +8,12 @@
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-		<StackPanel x:Name="MuseScoreStackPanel" x:Uid="MuseScoreStackPanel">
-			<usercontrols:SettingEditor Margin="5"
+        <StackPanel x:Name="MuseScoreStackPanel" x:Uid="MuseScoreStackPanel">
+            <Button Content="Download MuseScore"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Command="{x:Bind ViewModel.DownloadCommand}"/>
+            <usercontrols:SettingEditor Margin="5"
 										Name="SourceFileUrl"
 										Header="SourceFile Url"
                                         SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
@@ -36,10 +40,6 @@
                                         SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
                                         RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
                                         CommandParameter="DestinationFilePath"/>
-			<Button Content="Download MuseScore"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Command="{x:Bind ViewModel.DownloadCommand}"/>
 		</StackPanel>
     </Grid>
 </Page>
