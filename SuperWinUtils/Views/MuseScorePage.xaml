@@ -28,14 +28,14 @@
                                         RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
                                         CommandParameter="SourceFilePath"/>
 			<usercontrols:SettingEditor Margin="5"
-										Name="DestinationFileUrl"
-										Header="DestinationFile Url"
+										Name="DestinationFilePath"
+										Header="DestinationFile Path"
                                         SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
                                         RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
                                         Value="{x:Bind ViewModel.DestinationFilePath}"
                                         SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
                                         RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
-                                        CommandParameter="DestinationFileUrl"/>
+                                        CommandParameter="DestinationFilePath"/>
 			<Button Content="Download MuseScore"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"

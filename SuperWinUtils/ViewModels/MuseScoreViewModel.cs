@@ -150,7 +150,14 @@ public partial class MuseScoreViewModel : BaseViewModel
 
         if (key != null)
         {
-            await _localSettingsService.SaveSettingAsync(key, settingVar);
+            try
+            {
+                await _localSettingsService.SaveSettingAsync(key, settingVar);
+            }
+            catch
+            {
+                message = $"Failed to save setting {setting}!";
+            }
         }
 
         await ReportStatus(message);
@@ -160,23 +167,30 @@ public partial class MuseScoreViewModel : BaseViewModel
     [RelayCommand]
     private async Task RestoreSettingAsync(string setting)
     {
-        switch (setting)
+        try
         {
-            case "SourceFileUrl":
-                SourceFileUrl = _defaultSourceFileUrl;
-                await _localSettingsService.SaveSettingAsync(_settingsKeySourceFileUrl, SourceFileUrl);
-                break;
-            case "SourceFilePath":
-                SourceFilePath = _defaultSourceFilePath;
-                await _localSettingsService.SaveSettingAsync(_settingsKeySourceFilePath, SourceFilePath);
-                break;
-            case "DestinationFilePath":
-                DestinationFilePath = _defaultDestinationFilePath;
-                await _localSettingsService.SaveSettingAsync(_settingsKeyDestinationFilePath, DestinationFilePath);
-                break;
-            default:
-                await ReportStatus($"Wrong Textbox! {setting}");
-                return;
+            switch (setting)
+            {
+                case "SourceFileUrl":
+                    SourceFileUrl = _defaultSourceFileUrl;
+                    await _localSettingsService.SaveSettingAsync(_settingsKeySourceFileUrl, SourceFileUrl);
+                    break;
+                case "SourceFilePath":
+                    SourceFilePath = _defaultSourceFilePath;
+                    await _localSettingsService.SaveSettingAsync(_settingsKeySourceFilePath, SourceFilePath);
+                    break;
+                case "DestinationFilePath":
+                    DestinationFilePath = _defaultDestinationFilePath;
+                    await _localSettingsService.SaveSettingAsync(_settingsKeyDestinationFilePath, DestinationFilePath);
+                    break;
+                default:
+                    await ReportStatus($"Wrong Textbox {setting}!");
+                    return;
+            }
+        }
+        catch (Exception)
+        {
+            await ReportStatus($"Failed to restore setting {setting}!");
         }
     }
 }
