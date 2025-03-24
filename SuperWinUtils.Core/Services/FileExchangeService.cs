@@ -6,7 +6,7 @@ namespace SuperWinUtils.Core.Services;
 public class FileExchangeService (HttpClient httpClient) : IFileExchangeService
 {
     private readonly HttpClient _httpClient = httpClient;
-    public async Task DownloadFileAsync(string sourceFileUrl, string sourceFilePath, IProgress<DownloadProgress> progress, [EnumeratorCancellation] CancellationToken cancellationToken)
+    public async Task DownloadFileAsync(string sourceFileUrl, string sourceFilePath, IProgress<DownloadProgress> progress, CancellationToken cancellationToken)
     {
         var existingLength = File.Exists(sourceFilePath) ? new FileInfo(sourceFilePath).Length : 0;
 
