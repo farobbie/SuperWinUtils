@@ -80,6 +80,7 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<IFileExchangeService, FileExchangeService>();
             services.AddSingleton<IArchiveService, ArchiveService>();
+            services.AddSingleton<IWaterMeterReaderDataService, WaterMeterReaderDataService>();
 
             // Views and ViewModels
             services.AddTransient<WaterMeterReaderViewModel>();
