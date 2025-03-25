@@ -1,6 +1,8 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SuperWinUtils.Contracts.Services;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace SuperWinUtils.Services;
 
@@ -52,6 +54,23 @@ public class DialogService : IDialogService
 
         var dialog = CreateContentDialog(title, inputTextBox, primaryButtonText, secondaryButtonText, closeButtonText);
         return await dialog.ShowAsync();
+    }
+
+    public async Task<IReadOnlyList<StorageFile>> OpenImagesAsync()
+    {
+        var picker = new FileOpenPicker();
+        var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+        WinRT.Interop.InitializeWithWindow.Initialize(picker, hWnd);
+
+        picker.ViewMode = PickerViewMode.Thumbnail;
+        picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+        picker.FileTypeFilter.Add(".jpg");
+        picker.FileTypeFilter.Add(".jpeg");
+        picker.FileTypeFilter.Add(".png");
+
+        var files = await picker.PickMultipleFilesAsync();
+        
+        return files;
     }
 
 }
