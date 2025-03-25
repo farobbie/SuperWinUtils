@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using SuperWinUtils.Contracts.Services;
+using Windows.Storage;
 
 namespace SuperWinUtils.ViewModels;
 
@@ -21,6 +22,21 @@ public partial class BaseViewModel : ObservableRecipient
     public BaseViewModel()
     {
         
+    }
+
+    protected async Task ShowAlert(string message)
+    {
+        await _dialogService.ShowAlertDialogAsync(message);
+    }
+
+    protected async Task<IReadOnlyList<StorageFile>> LoadImagesAsync()
+    {
+        var files = await _dialogService.OpenImagesAsync();
+        if (files.Count > 0)
+        {
+            await ShowAlert("No files selected.");
+        }
+        return files;
     }
 
     protected async Task ReportStatus(string statusMessage)
