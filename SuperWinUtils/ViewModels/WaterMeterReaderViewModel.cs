@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SuperWinUtils.Contracts.ViewModels;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Models;
+using SuperWinUtils.Helpers;
 
 namespace SuperWinUtils.ViewModels;
 
@@ -35,11 +36,12 @@ public partial class WaterMeterReaderViewModel : BaseViewModel, INavigationAware
             // open files for reading
             var files = await LoadImagesAsync();
 
-            // TODO: convert files to fileData
+            // convert files to fileData
+            var fileDatas = await Task.WhenAll(files.Select(file => ToFileDataConverter.ConvertToFileDataAsync(file)));
+            var fileDataList = fileDatas.ToList();
 
-            // TODO: send files to service
-
-
+            // send files to service
+            await _waterMeterReaderDataService.ReadWaterMeterReaderDataAsync(fileDataList);
         }
         catch (Exception)
         {
