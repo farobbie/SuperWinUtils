@@ -1,4 +1,6 @@
-﻿using Emgu.CV;
+﻿using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
+using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.OCR;
 using SuperWinUtils.Core.Contracts.Services;
@@ -12,20 +14,32 @@ public class WaterMeterReaderDataService : IWaterMeterReaderDataService
     public WaterMeterReaderDataService()
     {
         _fileDatas = [];
-        _tesseract = new Tesseract("./tessdata", "eng", OcrEngineMode.TesseractOnly, "IlioO01223456789")
+        var currentPath = Path.Combine(AppContext.BaseDirectory, "Tessdata");
+        
+        _tesseract = new Tesseract(currentPath, "eng", OcrEngineMode.TesseractOnly, "IlioO01223456789")
         {
             PageSegMode = PageSegMode.SingleLine
         };
     }
 
-    public async Task ReadWaterMeterReaderDataAsync(List<FileData> fileDatas)
+    public async Task<List<FileData>> ReadWaterMeterReaderDataAsync(List<FileData> fileDatas, IProgress<int> progress = null)
     {
         _fileDatas.AddRange(fileDatas);
-        await Parallel.ForEachAsync(_fileDatas, async (file, _) =>
+        var total = _fileDatas.Count;
+        var processed = 0;
+
+        var task = _fileDatas.Select(async file =>
         {
             file.Pix = await ConvertByteToPix(file.Content);
             file.Text = await ReadWaterMeterReaderDataFromPixAsync(file.Pix);
+
+            var currentProgress = Interlocked.Increment(ref processed);
+            progress?.Report(currentProgress * 100 / total);
         });
+
+        await Task.WhenAll(task);
+
+        return _fileDatas;
     }
 
     private static async Task<Pix> ConvertByteToPix(byte[] content)

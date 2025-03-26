@@ -3,5 +3,5 @@
 namespace SuperWinUtils.Core.Contracts.Services;
 public interface IWaterMeterReaderDataService
 {
-    Task ReadWaterMeterReaderDataAsync(List<FileData> fileDatas);
+    Task<List<FileData>> ReadWaterMeterReaderDataAsync(List<FileData> fileDatas, IProgress<int> progress = null);
 }

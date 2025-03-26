@@ -42,6 +42,7 @@ public partial class WaterMeterReaderViewModel : BaseViewModel, INavigationAware
 
             // send files to service
             await _waterMeterReaderDataService.ReadWaterMeterReaderDataAsync(fileDataList);
+
         }
         catch (Exception)
         {
@@ -53,8 +54,13 @@ public partial class WaterMeterReaderViewModel : BaseViewModel, INavigationAware
         }
     }
 
+    private async Task AddToSource(WaterMeterReaderData data)
+    {
+        await Task.CompletedTask;
+        Source.Add(data);
+    }
 
-    public async void OnNavigatedTo(object parameter)
+    private async Task GetSampleData()
     {
         Source.Clear();
 
@@ -62,8 +68,14 @@ public partial class WaterMeterReaderViewModel : BaseViewModel, INavigationAware
 
         foreach (var item in data)
         {
-            Source.Add(item);
+            await AddToSource(item);
         }
+    }
+
+
+    public async void OnNavigatedTo(object parameter)
+    {
+        await GetSampleData();
     }
 
     public void OnNavigatedFrom()
