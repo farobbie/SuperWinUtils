@@ -1,10 +1,12 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 
 namespace SuperWinUtils.Contracts.Services;
 
 public interface IDialogService
 {
+    Task ShowImageWithText(string message, BitmapImage image);
     Task ShowAlertDialogAsync(string message);
     Task ShowWarningDialogAsync(string message);
     Task<ContentDialogResult> ShowOptionMessageDialogAsync(string title, string content, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK");

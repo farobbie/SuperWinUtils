@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
-
+using Microsoft.UI.Xaml.Controls;
 using SuperWinUtils.Activation;
 using SuperWinUtils.Contracts.Services;
 using SuperWinUtils.Core.Contracts.Services;
@@ -22,10 +24,9 @@ public partial class App : Application
     // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
     // https://docs.microsoft.com/dotnet/core/extensions/configuration
     // https://docs.microsoft.com/dotnet/core/extensions/logging
-    public IHost Host
-    {
-        get;
-    }
+
+    private readonly ILogger<App> _logger;
+    public IHost Host { get; }
 
     public static T GetService<T>()
         where T : class
@@ -40,10 +41,7 @@ public partial class App : Application
 
     public static WindowEx MainWindow { get; } = new MainWindow();
 
-    public static UIElement? AppTitlebar
-    {
-        get; set;
-    }
+    public static UIElement? AppTitlebar { get; set; }
 
     public App()
     {
@@ -100,14 +98,38 @@ public partial class App : Application
         Build();
 
         App.GetService<IAppNotificationService>().Initialize();
+        
+        var factory = LoggerFactory.Create(builder =>
+        {
+            builder.SetMinimumLevel(LogLevel.Error)
+                   .AddDebug()
+                   .AddConsole();
+        });
+        _logger = factory.CreateLogger<App>();
 
         UnhandledException += App_UnhandledException;
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        // TODO: Log and handle exceptions as appropriate.
-        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        e.Handled = true;
+
+        _logger.LogError(e.Exception, "Unhandled exception occured.");
+
+        ShowErrorDialog(e.Exception);
+    }
+
+    private static async void ShowErrorDialog(Exception ex)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = "Error",
+            Content = $"Error: {ex.Message}",
+            CloseButtonText = "OK",
+            XamlRoot = App.MainWindow.Content.XamlRoot
+        };
+
+        await dialog.ShowAsync();
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)

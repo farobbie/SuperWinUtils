@@ -1,4 +1,4 @@
-﻿using Emgu.CV.OCR;
+﻿using Emgu.CV;
 
 namespace SuperWinUtils.Core.Models;
 public class FileData
@@ -7,7 +7,11 @@ public class FileData
     public string Path { get; set; }
     public DateTime Date { get; set; }
     public byte[] Content { get; set; }
-    public Pix Pix { get; set; }
+    public string FileFormat { get; set; }
+
+    public Mat Mat { get; set; }
+    public Mat GrayMat { get; set; }
+
     public string Text { get; set; }
 
 }

@@ -1,4 +1,6 @@
-﻿using SuperWinUtils.Helpers;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using SuperWinUtils.Helpers;
 
 using Windows.UI.ViewManagement;
 
@@ -6,9 +8,9 @@ namespace SuperWinUtils;
 
 public sealed partial class MainWindow : WindowEx
 {
-    private Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
+    private readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
 
-    private UISettings settings;
+    private readonly UISettings settings;
 
     public MainWindow()
     {
@@ -22,6 +24,7 @@ public sealed partial class MainWindow : WindowEx
         dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         settings = new UISettings();
         settings.ColorValuesChanged += Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
+        Closed += MainWindow_Closed;
     }
 
     // this handles updating the caption button colors correctly when indows system theme is changed
@@ -33,5 +36,28 @@ public sealed partial class MainWindow : WindowEx
         {
             TitleBarHelper.ApplySystemThemeToCaptionButtons();
         });
+    }
+
+    private async void MainWindow_Closed(object sender, WindowEventArgs e)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = "Confirmation",
+            Content = "Do you really want to close this app?",
+            PrimaryButtonText = "Yes",
+            SecondaryButtonText = "Cancel",
+            XamlRoot = App.MainWindow.Content.XamlRoot
+        };
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Secondary)
+        {
+            e.Handled = true;
+        }
+        else
+        {
+
+        }
     }
 }

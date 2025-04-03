@@ -1,9 +1,12 @@
-﻿using SuperWinUtils.Core.Models;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using Microsoft.UI.Xaml.Media.Imaging;
+using SuperWinUtils.Core.Models;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace SuperWinUtils.Helpers;
-public class ToFileDataConverter
+public class ImageConverter
 {
     private static readonly HashSet<string> ImageMimeTypes =
     [
@@ -13,7 +16,9 @@ public class ToFileDataConverter
     private static async Task<bool> IsImageAsync(StorageFile file)
     {
         if (file == null)
+        {
             return false;
+        }
 
         var properties = await file.Properties.RetrievePropertiesAsync(["System.ContentType"]);
         if (properties.TryGetValue("System.ContentType", out var value) && value is string mimeType)
@@ -26,19 +31,21 @@ public class ToFileDataConverter
     private static async Task<byte[]> ReadImageAsBytesAsync(StorageFile file)
     {
         if (file == null)
+        {
             return [];
-        var buffer = await FileIO.ReadBufferAsync(file);
-        using var reader = DataReader.FromBuffer(buffer);
-        var bytes = new byte[buffer.Length];
-        reader.ReadBytes(bytes);
-        return bytes;
+        }
+
+        using IRandomAccessStream stream = await file.OpenReadAsync();
+        using MemoryStream ms = new();
+        await stream.AsStreamForRead().CopyToAsync(ms);
+        return ms.ToArray();
     }
 
-    public static async Task<FileData> ConvertToFileDataAsync(StorageFile file)
+    public static async Task<FileData?> ConvertToFileDataAsync(StorageFile file)
     {
-        if (await IsImageAsync(file))
+        if (!(await IsImageAsync(file)))
         {
-            throw new ArgumentException("ExceptionToFileDataConverterFileTypeNotSupported");
+            return null;
         }
 
         return new FileData
@@ -48,5 +55,17 @@ public class ToFileDataConverter
             Date = file.DateCreated.DateTime,
             Content = await ReadImageAsBytesAsync(file)
         };
+    }
+
+    public static async Task<BitmapImage> BitmapToBitmapImageAsync(Bitmap bitmap)
+    {
+        using MemoryStream memoryStream = new();
+        bitmap.Save(memoryStream, ImageFormat.Png);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+
+        BitmapImage bitmapImage = new();
+        using var stream = memoryStream.AsRandomAccessStream();
+        await bitmapImage.SetSourceAsync(stream);
+        return bitmapImage;
     }
 }

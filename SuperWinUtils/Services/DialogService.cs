@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
 using SuperWinUtils.Contracts.Services;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -21,6 +22,28 @@ public class DialogService : IDialogService
             CloseButtonText = closeButtonText,
 
         };
+    }
+
+    public async Task ShowImageWithText(string message, BitmapImage image)
+    {
+        var dialog = CreateContentDialog("Image with text", message, string.Empty, string.Empty);
+        
+        dialog.Content = new StackPanel
+        {
+            Orientation = Orientation.Vertical,
+            Children =
+            {
+                new Image
+                {
+                    Source = image
+                },
+                new TextBlock
+                {
+                    Text = message
+                }
+            }
+        };
+        await dialog.ShowAsync();
     }
 
     public async Task ShowAlertDialogAsync(string message)

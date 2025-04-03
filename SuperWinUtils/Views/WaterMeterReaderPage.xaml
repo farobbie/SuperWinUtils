@@ -7,22 +7,72 @@
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
-        <controls:DataGrid
-            AutoGenerateColumns="False"
-            GridLinesVisibility="Horizontal"
-            IsReadOnly="True"
-            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
-            <controls:DataGrid.Resources>
-                <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
-            </controls:DataGrid.Resources>
-            <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Binding="{Binding Date}" Header="Date" />
-                <controls:DataGridTextColumn Binding="{Binding WarmWater}" Header="WarmWater" />
-                <controls:DataGridTextColumn Binding="{Binding ColdWater}" Header="ColdWater" />
-                <controls:DataGridTextColumn Binding="{Binding ColdWaterDifference}" Header="Δ ColdWater" />
-                <controls:DataGridTextColumn Binding="{Binding WarmWaterDifference}" Header="Δ WarmWater" />
-            </controls:DataGrid.Columns>
-        </controls:DataGrid>
+    <Grid x:Name="ContentArea" RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0">
+
+            <StackPanel>
+                <TextBox
+                    x:Name="WaterReaderDate"
+                    Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Width="200" FontSize="16"
+                    Header="Date"
+                    PlaceholderText="Enter Date"
+                />
+
+                <TextBox
+                    x:Name="WaterReaderWarmWater"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="200"
+                    FontSize="16"
+                    InputScope="Number"
+                    Header="Warm Water"
+                    PlaceholderText="Warm Water"
+                />
+
+                <TextBox
+                    x:Name="WaterReaderColdWater"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="200"
+                    FontSize="16"
+                    InputScope="Number"
+                    Header="Cold Water"
+                    PlaceholderText="Cold Water"
+                />
+
+                <Button 
+                    x:Name="WaterMeterReaderAdd"
+                    Margin="5"
+                    Content="Add Data"        
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                />
+            </StackPanel>
+
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <controls:DataGrid
+                AutoGenerateColumns="False"
+                GridLinesVisibility="Horizontal"
+                IsReadOnly="True"
+                ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+                <controls:DataGrid.Resources>
+                    <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
+                </controls:DataGrid.Resources>
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Binding="{Binding Date}" Header="Date" />
+                    <controls:DataGridTextColumn Binding="{Binding WarmWater}" Header="WarmWater" />
+                    <controls:DataGridTextColumn Binding="{Binding ColdWater}" Header="ColdWater" />
+                    <controls:DataGridTextColumn Binding="{Binding ColdWaterDifference}" Header="Δ ColdWater" />
+                    <controls:DataGridTextColumn Binding="{Binding WarmWaterDifference}" Header="Δ WarmWater" />
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+
+        </StackPanel>
+        
     </Grid>
 </Page>

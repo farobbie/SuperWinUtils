@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Imaging;
 using SuperWinUtils.Contracts.Services;
 using Windows.Storage;
 
@@ -29,10 +30,15 @@ public partial class BaseViewModel : ObservableRecipient
         await _dialogService.ShowAlertDialogAsync(message);
     }
 
+    protected async Task ShowTextImage(string message, BitmapImage image)
+    {
+        await _dialogService.ShowImageWithText(message, image);
+    }
+
     protected async Task<IReadOnlyList<StorageFile>> LoadImagesAsync()
     {
         var files = await _dialogService.OpenImagesAsync();
-        if (files.Count > 0)
+        if (files.Count <= 0)
         {
             await ShowAlert("No files selected.");
         }
