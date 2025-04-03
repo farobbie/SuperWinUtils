@@ -136,6 +136,9 @@ public partial class App : Application
     {
         base.OnLaunched(args);
 
+        var manager = WinUIEx.WindowManager.Get(MainWindow);
+        manager.PersistenceId = string.Empty;
+
         //App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));
 
         await App.GetService<IActivationService>().ActivateAsync(args);
