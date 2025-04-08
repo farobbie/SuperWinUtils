@@ -1,12 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Emgu.CV;
 using SuperWinUtils.Contracts.ViewModels;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Models;
-using SuperWinUtils.Helpers;
-using Windows.Networking.NetworkOperators;
 
 namespace SuperWinUtils.ViewModels;
 
@@ -14,6 +11,26 @@ public partial class WaterMeterReaderViewModel : BaseViewModel, INavigationAware
 {
     private readonly ISampleDataService _sampleDataService;
     private readonly IWaterMeterReaderDataService _waterMeterReaderDataService;
+
+
+    [ObservableProperty]
+    public partial int WarmWaterSingleData { get; set; }
+
+
+    [ObservableProperty]
+    public partial int ColdWaterSingleData { get; set; }
+
+
+    [ObservableProperty]
+    public partial DateTimeOffset DateSingleData { get; set; }
+
+
+    [ObservableProperty]
+    public partial TimeSpan TimeSingleData { get; set; }
+
+
+
+
 
     public ObservableCollection<WaterMeterReaderData> Source { get; } = [];
 
@@ -67,6 +84,41 @@ public partial class WaterMeterReaderViewModel : BaseViewModel, INavigationAware
         }
     }
 
+
+    [RelayCommand]
+    public async Task AddSingleDataAsync()
+    {
+        if (IsBusy)
+        {
+            return;
+        }
+
+        var data = new WaterMeterReaderData
+        {
+            WarmWater = WarmWaterSingleData,
+            ColdWater = ColdWaterSingleData,
+            Date = new DateTime(DateSingleData.Year, DateSingleData.Month, DateSingleData.Day, TimeSingleData.Hours, TimeSingleData.Minutes, 0)
+        };
+
+
+        if (data.WarmWater < 0 || data.ColdWater < 0)
+        {
+            await ShowAlert("Invalid data");
+            return;
+        }
+
+        if (Source.Any(d => d.Date.Date == data.Date.Date))
+        {
+            await ShowAlert("Data for this date already exists.");
+            return;
+        }
+
+        await AddToSource(data);
+    }
+
+    partial void OnWarmWaterSingleDataChanged(int value)
+    {
+    }
 
     public async void OnNavigatedTo(object parameter)
     {

@@ -12,37 +12,39 @@
         <Grid Grid.Row="0">
 
             <StackPanel>
-                <TextBox
-                    x:Name="WaterReaderDate"
-                    Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Width="200" FontSize="16"
-                    Header="Date"
-                    PlaceholderText="Enter Date"
-                />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <DatePicker CornerRadius="5,0,0,5" 
+                                Date="{x:Bind ViewModel.DateSingleData, Mode=TwoWay}" 
+                    />
+                    
+                    <TimePicker ClockIdentifier="24HourClock" CornerRadius="0,5,5,0" 
+                                Time="{x:Bind ViewModel.TimeSingleData, Mode=TwoWay}"
+                    />
+                </StackPanel>
 
-                <TextBox
-                    x:Name="WaterReaderWarmWater"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Width="200"
-                    FontSize="16"
-                    InputScope="Number"
-                    Header="Warm Water"
-                    PlaceholderText="Warm Water"
-                />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <NumberBox
+                        x:Name="WaterReaderWarmWater"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Width="200"
+                        FontSize="16"
+                        Header="Warm Water"
+                        PlaceholderText="Warm Water"
+                        Text="{x:Bind ViewModel.WarmWaterSingleData, Mode=TwoWay}"
+                    />
 
-                <TextBox
-                    x:Name="WaterReaderColdWater"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Width="200"
-                    FontSize="16"
-                    InputScope="Number"
-                    Header="Cold Water"
-                    PlaceholderText="Cold Water"
-                />
+                    <NumberBox
+                        x:Name="WaterReaderColdWater"
+                        Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Width="200"
+                        FontSize="16"
+                        Header="Cold Water"
+                        PlaceholderText="Cold Water"
+                        Text="{x:Bind ViewModel.ColdWaterSingleData, Mode=TwoWay}"
+                    />
+                </StackPanel>
 
                 <Button 
                     x:Name="WaterMeterReaderAdd"
@@ -50,6 +52,7 @@
                     Content="Add Data"        
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.AddSingleDataCommand}"
                 />
             </StackPanel>
 
