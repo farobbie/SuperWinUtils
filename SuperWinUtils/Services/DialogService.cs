@@ -96,4 +96,15 @@ public class DialogService : IDialogService
         return files;
     }
 
+    public async Task<StorageFolder> PickFolderAsync()
+    {
+        var picker = new FolderPicker();
+        var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+        WinRT.Interop.InitializeWithWindow.Initialize(picker, hWnd);
+
+        picker.ViewMode = PickerViewMode.Thumbnail;
+        var folder = await picker.PickSingleFolderAsync();
+        return folder;
+    }
+
 }

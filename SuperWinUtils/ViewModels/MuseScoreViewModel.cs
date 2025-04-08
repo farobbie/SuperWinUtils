@@ -76,6 +76,7 @@ public partial class MuseScoreViewModel : BaseViewModel
     [RelayCommand]
     private async Task DownloadAsync()
     {
+        var success = true;
         try
         {
             if (IsBusy)
@@ -85,24 +86,58 @@ public partial class MuseScoreViewModel : BaseViewModel
 
             IsBusy = true;
 
+            // Validation
+
+            if (string.IsNullOrWhiteSpace(SourceFileUrl))
+            {
+                await ReportStatus("SourceFileUrl is empty!");
+                throw new ArgumentException("SourceFileUrl is not valid!", nameof(SourceFileUrl));
+            }
+            if (string.IsNullOrWhiteSpace(SourceFilePath))
+            {
+                await ReportStatus("SourceFilePath is empty!");
+                throw new ArgumentException("SourceFilePath is not valid!", nameof(SourceFilePath));
+            }
+            if (string.IsNullOrWhiteSpace(DestinationFilePath))
+            {
+                await ReportStatus("DestinationFilePath is empty!");
+                throw new ArgumentException("DestinationFilePath is not valid!", nameof(DestinationFilePath));
+            }
+
+            if(!Directory.Exists(SourceFilePath))
+            {
+                await ReportStatus("SourceFilePath does not exist!");
+                throw new DirectoryNotFoundException("SourceFilePath does not exist!");
+            }
+
+            if (!Directory.Exists(DestinationFilePath))
+            {
+                await ReportStatus("DestinationFilePath does not exist!");
+                throw new DirectoryNotFoundException("DestinationFilePath does not exist!");
+            }
+
             // Download MuseScore
             await DownloadMuseScoreFileAsync();
 
             await ReportStatus("Downloaded MuseScore");
 
             // Extract MuseScore
-            await ExtractMuseScoreFileAsync();
+            //await ExtractMuseScoreFileAsync();
 
-            await ReportStatus("Extracted MuseScore");
+           //await ReportStatus("Extracted MuseScore");
         }
         catch (Exception ex)
         {
+            success = false;
             await _dialogService.ShowAlertDialogAsync(ex.Message);
         }
         finally
         {
             IsBusy = false;
-            await ReportStatus("Ready downloading MuseScore");
+            if(success)
+            {
+                await ReportStatus("MuseScore download completed");
+            }
         }
     }
 
@@ -193,4 +228,37 @@ public partial class MuseScoreViewModel : BaseViewModel
             await ReportStatus($"Failed to restore setting {setting}!");
         }
     }
+
+
+    [RelayCommand]
+    private async Task PickFolderAsync(string button)
+    {
+        try
+        {
+            var folder = await base.PickFolderAsync();
+            if(folder == null)
+            {
+                return;
+            }
+            switch (button)
+            {
+                case "SourceFilePath":
+                    SourceFilePath = folder.Path;
+                    await ReportStatus($"SourceFilePath: {SourceFilePath}");
+                    break;
+                case "DestinationFilePath":
+                    DestinationFilePath = folder.Path;
+                    break;
+                default:
+                    await ReportStatus($"Wrong Button {button}!");
+                    return;
+
+            }
+        }
+        catch (Exception ex)
+        {
+            await ReportStatus(ex.Message);
+        }
+    }
+
 }

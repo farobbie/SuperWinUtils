@@ -18,25 +18,31 @@
 										Header="SourceFile Url"
                                         SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
                                         RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
-                                        Value="{x:Bind ViewModel.SourceFileUrl}"
+                                        Value="{x:Bind ViewModel.SourceFileUrl, Mode=TwoWay}"
                                         SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
                                         RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
                                         CommandParameter="SourceFileUrl"/>
-			<usercontrols:SettingEditor Margin="5"
-										Name="SourceFilePath"
-										Header="SourceFile Path"
-                                        SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
-                                        RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
-                                        Value="{x:Bind ViewModel.SourceFilePath}"
-                                        SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
-                                        RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
-                                        CommandParameter="SourceFilePath"/>
+            <StackPanel Orientation="Horizontal">
+                <usercontrols:SettingEditor Margin="5"
+										    Name="SourceFilePath"
+										    Header="SourceFile Path"
+                                            SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
+                                            RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
+                                            Value="{x:Bind ViewModel.SourceFilePath, Mode=TwoWay}"
+                                            SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
+                                            RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
+                                            CommandParameter="SourceFilePath"/>
+                <Button Margin="0,26,0,0"
+                        Command="{x:Bind ViewModel.PickFolderCommand}" CommandParameter="SourceFilePath">
+                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC50;"/>
+                </Button>
+            </StackPanel>
 			<usercontrols:SettingEditor Margin="5"
 										Name="DestinationFilePath"
 										Header="DestinationFile Path"
                                         SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
                                         RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
-                                        Value="{x:Bind ViewModel.DestinationFilePath}"
+                                        Value="{x:Bind ViewModel.DestinationFilePath, Mode=TwoWay}"
                                         SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
                                         RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
                                         CommandParameter="DestinationFilePath"/>

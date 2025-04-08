@@ -45,6 +45,16 @@ public partial class BaseViewModel : ObservableRecipient
         return files;
     }
 
+    protected async Task<StorageFolder?> PickFolderAsync()
+    {
+        var folder = await _dialogService.PickFolderAsync();
+        if (folder == null)
+        {
+            await ShowAlert("No folder selected.");
+        }
+        return folder;
+    }
+
     protected async Task ReportStatus(string statusMessage)
     {
         await _statusService.Report($"{Title}: {statusMessage}");

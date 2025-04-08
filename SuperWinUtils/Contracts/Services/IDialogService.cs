@@ -12,4 +12,5 @@ public interface IDialogService
     Task<ContentDialogResult> ShowOptionMessageDialogAsync(string title, string content, string primaryButtonText, string secondaryButtonText, string closeButtonText = "OK");
     Task<ContentDialogResult> InputStringDialogAsync(string title, string defaultText, string primaryButtonText, string secondaryButtonText, string closeButtonText = "Cancel");
     Task<IReadOnlyList<StorageFile>> OpenImagesAsync();
+    Task<StorageFolder> PickFolderAsync();
 }
