@@ -10,11 +10,12 @@
     <Grid x:Name="ContentArea">
         <StackPanel x:Name="MuseScoreStackPanel" x:Uid="MuseScoreStackPanel">
             <Button Content="Download MuseScore"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
+					HorizontalAlignment="Center" VerticalAlignment="Center"
+                    IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
 					Command="{x:Bind ViewModel.DownloadCommand}"/>
             <usercontrols:SettingEditor Margin="5"
 										Name="SourceFileUrl"
+                                            IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
 										Header="SourceFile Url"
                                         SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
                                         RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
@@ -25,6 +26,7 @@
             <StackPanel Orientation="Horizontal">
                 <usercontrols:SettingEditor Margin="5"
 										    Name="SourceFilePath"
+                                            IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
 										    Header="SourceFile Path"
                                             SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
                                             RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
@@ -32,20 +34,27 @@
                                             SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
                                             RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
                                             CommandParameter="SourceFilePath"/>
-                <Button Margin="0,26,0,0"
+                <Button Margin="0,26,0,0" IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
                         Command="{x:Bind ViewModel.PickFolderCommand}" CommandParameter="SourceFilePath">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC50;"/>
                 </Button>
             </StackPanel>
-			<usercontrols:SettingEditor Margin="5"
-										Name="DestinationFilePath"
-										Header="DestinationFile Path"
-                                        SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
-                                        RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
-                                        Value="{x:Bind ViewModel.DestinationFilePath, Mode=TwoWay}"
-                                        SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
-                                        RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
-                                        CommandParameter="DestinationFilePath"/>
-		</StackPanel>
+            <StackPanel Orientation="Horizontal">
+			    <usercontrols:SettingEditor Margin="5"
+										    Name="DestinationFilePath"
+                                            IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
+										    Header="DestinationFile Path"
+                                            SaveToolTip="{x:Bind ViewModel.SaveToolTip}"
+                                            RestoreToolTip="{x:Bind ViewModel.RestoreToolTip}"
+                                            Value="{x:Bind ViewModel.DestinationFilePath, Mode=TwoWay}"
+                                            SaveCommand="{x:Bind ViewModel.SaveSettingCommand}"
+                                            RestoreCommand="{x:Bind ViewModel.RestoreSettingCommand}"
+                                            CommandParameter="DestinationFilePath"/>
+                <Button Margin="0,26,0,0" IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.PickFolderCommand}" CommandParameter="^DestinationFilePath">
+                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC50;"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

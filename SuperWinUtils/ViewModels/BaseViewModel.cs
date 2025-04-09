@@ -18,11 +18,16 @@ public partial class BaseViewModel : ObservableRecipient
     [ObservableProperty]
     public partial bool IsBusy { get; set; }
 
-    protected bool IsNotBusy => !IsBusy;
+    public bool IsNotBusy => !IsBusy;
 
     public BaseViewModel()
     {
-        
+        IsBusy = false;
+    }
+
+    partial void OnIsBusyChanged(bool oldValue, bool newValue)
+    {
+        OnPropertyChanged(nameof(IsNotBusy));
     }
 
     protected async Task ShowAlert(string message)
@@ -66,4 +71,5 @@ public partial class BaseViewModel : ObservableRecipient
 
         await Task.CompletedTask;
     }
+
 }

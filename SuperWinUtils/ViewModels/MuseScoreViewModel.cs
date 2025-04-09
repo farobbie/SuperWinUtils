@@ -42,6 +42,7 @@ public partial class MuseScoreViewModel : BaseViewModel
 
     public MuseScoreViewModel(ILocalSettingsService localSettingsService, IFileExchangeService fileExchangeService, IArchiveService archiveService)
     {
+        IsBusy = false;
         Title = "MuseScore";
         _localSettingsService = localSettingsService;
         _fileExchangeService = fileExchangeService;
@@ -76,15 +77,16 @@ public partial class MuseScoreViewModel : BaseViewModel
     [RelayCommand]
     private async Task DownloadAsync()
     {
+        if (IsBusy)
+        {
+            return;
+        }
+
+        IsBusy = true;
         var success = true;
         try
         {
-            if (IsBusy)
-            {
-                return;
-            }
-
-            IsBusy = true;
+            
 
             // Validation
 
@@ -175,6 +177,7 @@ public partial class MuseScoreViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveSettingAsync(string setting)
     {
+        IsBusy = true;
         var (key, settingVar, message) = setting switch
         {
             "SourceFileUrl" => (_settingsKeySourceFileUrl, SourceFileUrl, "Save SourceFileUrl"),
@@ -196,12 +199,14 @@ public partial class MuseScoreViewModel : BaseViewModel
         }
 
         await ReportStatus(message);
+        IsBusy = false;
     }
 
 
     [RelayCommand]
     private async Task RestoreSettingAsync(string setting)
     {
+        IsBusy = true;
         try
         {
             switch (setting)
@@ -227,12 +232,14 @@ public partial class MuseScoreViewModel : BaseViewModel
         {
             await ReportStatus($"Failed to restore setting {setting}!");
         }
+        IsBusy = false;
     }
 
 
     [RelayCommand]
     private async Task PickFolderAsync(string button)
     {
+        IsBusy = true;
         try
         {
             var folder = await base.PickFolderAsync();
@@ -258,6 +265,10 @@ public partial class MuseScoreViewModel : BaseViewModel
         catch (Exception ex)
         {
             await ReportStatus(ex.Message);
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 

@@ -70,4 +70,12 @@ public sealed partial class SettingEditor : UserControl
     public static readonly DependencyProperty RestoreToolTipProperty =
         DependencyProperty.Register(nameof(RestoreToolTip), typeof(string), typeof(SettingEditor), new PropertyMetadata(string.Empty));
 
+    public bool IsControlEnabled
+    {
+        get => (bool)GetValue(IsControlEnabledProperty);
+        set => SetValue(IsControlEnabledProperty, value);
+    }
+    public static readonly DependencyProperty IsControlEnabledProperty =
+       DependencyProperty.Register(nameof(IsControlEnabled), typeof(bool), typeof(SettingEditor), new PropertyMetadata(true));
+
 }
