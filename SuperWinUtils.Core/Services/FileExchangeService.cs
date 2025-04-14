@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Models;
 
@@ -24,6 +25,8 @@ public class FileExchangeService (HttpClient httpClient) : IFileExchangeService
 
         var totalBytes = response.Content.Headers.ContentRange?.Length ?? response.Content.Headers.ContentLength ?? 0L;
         var buffer = new byte[8192];
+        var sw = Stopwatch.StartNew();
+        var lastReport = DateTime.Now;
 
         await using var contentStream = await response.Content.ReadAsStreamAsync(cancellationToken);
         await using var fileStream = new FileStream(
@@ -42,12 +45,23 @@ public class FileExchangeService (HttpClient httpClient) : IFileExchangeService
         };
 
         int bytesRead;
+        var speed = 0;
         while ((bytesRead = await contentStream.ReadAsync(buffer.AsMemory(0, buffer.Length), cancellationToken)) > 0)
         {
             await fileStream.WriteAsync(buffer.AsMemory(0, bytesRead), cancellationToken);
 
-            downloadProgress.BytesReceived += bytesRead;
-            progress?.Report(downloadProgress);
+            if((DateTime.Now - lastReport).TotalMilliseconds >= 500 && bytesRead > 0)
+            {
+                downloadProgress.ElapsedTime = sw.Elapsed;
+                speed = (int)(bytesRead / sw.Elapsed.TotalSeconds);
+                downloadProgress.BytesReceived += bytesRead;
+                downloadProgress.RemainingTime = TimeSpan.FromSeconds((totalBytes - downloadProgress.BytesReceived) / Math.Max(speed, 1));
+                downloadProgress.Speed = speed > 1024 * 1024 ? (int)(speed / 1024 / 1024) : (int)(speed / 1024);
+                progress?.Report(downloadProgress);
+            }
+            lastReport = DateTime.Now;
         }
+
+        sw.Stop();
     }
 }

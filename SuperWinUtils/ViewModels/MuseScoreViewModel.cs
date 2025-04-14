@@ -4,6 +4,7 @@ using SuperWinUtils.Contracts.Services;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Models;
 using SuperWinUtils.Helpers;
+using SuperWinUtils.Models;
 
 namespace SuperWinUtils.ViewModels;
 
@@ -35,6 +36,11 @@ public partial class MuseScoreViewModel : BaseViewModel
 
     [ObservableProperty]
     public partial string RestoreToolTip { get; set; }
+
+
+    [ObservableProperty]
+    public partial DownloadState Download { get; set; }
+
 
 
 
@@ -157,7 +163,13 @@ public partial class MuseScoreViewModel : BaseViewModel
 
     private async Task DownloadMuseScoreFileAsync()
     {
-        var progressDownload = new Progress<DownloadProgress>();
+        var progressDownload = new Progress<DownloadProgress>(info =>
+        {
+            Download.Progress = info.Progress;
+            Download.ElapsedTime = info.ElapsedTime;
+            Download.RemainingTime = info.RemainingTime;
+            Download.Speed = info.Speed;
+        });
         progressDownload.ProgressChanged += async (_, data) =>
         {
             var progressPercentage = data.Progress * 100;
