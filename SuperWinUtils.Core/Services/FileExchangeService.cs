@@ -10,16 +10,13 @@ public class FileExchangeService (HttpClient httpClient) : IFileExchangeService
 
     public async Task<DateTimeOffset?> GetFileDateAsync(string sourceFileUrl)
     {
+        Debug.WriteLine(sourceFileUrl);
         using var request = new HttpRequestMessage(HttpMethod.Head, sourceFileUrl);
         using var response = await _httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        if (response.Content.Headers.LastModified.HasValue)
-        {
-            var lastModified = response.Content.Headers.LastModified.Value;
-
-            return lastModified;
-        }
-        return null;
+        var lastModified = response.Content.Headers.LastModified;
+        Debug.WriteLine(lastModified);
+        return lastModified;
     }
 
     public async Task DownloadFileAsync(string sourceFileUrl, string SourceFilePath, IProgress<DownloadProgress> progress, CancellationToken cancellationToken)

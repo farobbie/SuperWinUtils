@@ -8,8 +8,8 @@
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        <Grid x:Name="MuseScoreGrid" x:Uid="MuseScoreGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, Auto">
-            <Button Grid.Row="0" Grid.ColumnSpan="2"
+        <Grid x:Name="MuseScoreGrid" x:Uid="MuseScoreGrid" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
+            <Button Grid.Row="0" Grid.ColumnSpan="3"
                     Content="Download MuseScore"
 					HorizontalAlignment="Center" VerticalAlignment="Center"
                     IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
@@ -58,18 +58,25 @@
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC50;"/>
                 </Button>
             </StackPanel>
-            <Grid Margin="5" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Background="Gray" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto, Auto, Auto">
+            
+            <Button Grid.Row="1" Grid.Column="1" Content="Check Update"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="Version (installed):" />
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Bind ViewModel.VersionInstalled, Mode=TwoWay}" />
+            
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="Version (new):" />
+            <TextBlock Grid.Row="3" Grid.Column="2" Text="{x:Bind ViewModel.VersionServer, Mode=TwoWay}" />
+            <Grid Margin="5" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="Gray" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto, Auto, Auto">
                 <TextBlock Grid.Row="0" Grid.Column="0" Height="25" Text="Progress: " />
-                <TextBlock Grid.Row="0" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.Progress}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.Progress, Mode=TwoWay}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Height="25" Text="Elapsed Time: " />
-                <TextBlock Grid.Row="1" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.ElapsedTime}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.ElapsedTime, Mode=TwoWay}" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Height="25" Text="Remaining Time: " />
-                <TextBlock Grid.Row="2" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.RemainingTime}" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.RemainingTime, Mode=TwoWay}" />
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Height="25" Text="Speed: " />
-                <TextBlock Grid.Row="3" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.Speed}" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Height="25" Text="{x:Bind ViewModel.Download.Speed, Mode=TwoWay}" />
             </Grid>
         </Grid>
     </Grid>

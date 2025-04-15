@@ -1,10 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Diagnostics;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SuperWinUtils.Contracts.Services;
 using SuperWinUtils.Core.Contracts.Services;
 using SuperWinUtils.Core.Models;
 using SuperWinUtils.Helpers;
 using SuperWinUtils.Models;
+using static System.Net.WebRequestMethods;
 
 namespace SuperWinUtils.ViewModels;
 
@@ -42,6 +44,16 @@ public partial class MuseScoreViewModel : BaseViewModel
     public partial DownloadState Download { get; set; }
 
 
+    [ObservableProperty]
+    public partial string VersionInstalled { get; set; }
+
+
+    [ObservableProperty]
+    public partial string VersionServer { get; set; }
+
+
+
+
 
 
     private readonly CancellationTokenSource _cancellationTokenSource;
@@ -63,6 +75,11 @@ public partial class MuseScoreViewModel : BaseViewModel
 
         SaveToolTip = "SettingEditorSaveTooltip".GetLocalized() ?? "Save";
         RestoreToolTip = "SettingEditorRestoreTooltip".GetLocalized() ?? "Restore";
+
+        SourceFileUrl = @"https://ftp.osuosl.org/pub/musescore-nightlies/windows/4x/nightly/MuseScore-Studio-Nightly-latest-master-x86_64.7z";
+
+        _ = GetInstalledVersionMuseScoreAsync();
+        _ = ReportStatus("MuseScoreViewModel initialized");
     }
 
     public async Task InitializeAsync()
@@ -129,7 +146,7 @@ public partial class MuseScoreViewModel : BaseViewModel
             var fileName = Path.GetFileName(new Uri(SourceFileUrl).AbsolutePath);
             var sourceFilePathX = Path.Combine(SourceFilePath, fileName);
 
-            if (File.Exists(sourceFilePathX))
+            if (System.IO.File.Exists(sourceFilePathX))
             {
                 var lastModified = await _fileExchangeService.GetFileDateAsync(SourceFileUrl);
                 if (lastModified == null)
@@ -138,7 +155,7 @@ public partial class MuseScoreViewModel : BaseViewModel
                     throw new Exception("Failed to get file date!");
                 }
 
-                var fileDate = File.GetLastWriteTime(sourceFilePathX);
+                var fileDate = System.IO.File.GetLastWriteTime(sourceFilePathX);
 
                 if (fileDate >= lastModified)
                 {
@@ -151,7 +168,7 @@ public partial class MuseScoreViewModel : BaseViewModel
                     // Delete the file if it exists
                     try
                     {
-                        File.Delete(sourceFilePathX);
+                        System.IO.File.Delete(sourceFilePathX);
                     }
                     catch (Exception ex)
                     {
@@ -222,6 +239,40 @@ public partial class MuseScoreViewModel : BaseViewModel
     {
         await _cancellationTokenSource.CancelAsync();
     }
+
+
+    [RelayCommand]
+    private async Task CheckVersionMuseScoreAsync()
+    {
+        await GetServerVersionMuseScoreAsync();
+    }
+
+    private async Task GetServerVersionMuseScoreAsync()
+    {
+        await ReportStatus("Get ServerVersion");
+        var serverVersion = await _fileExchangeService.GetFileDateAsync(SourceFileUrl);
+
+
+        VersionServer = serverVersion.Value.ToString("yyyy-MM-dd HH:mm:ss");
+        Debug.WriteLine("VersionServer: " + VersionServer);
+        await ReportStatus("Server: " + VersionServer);
+    }
+
+    private async Task GetInstalledVersionMuseScoreAsync()
+    {
+        var exePath = @"P:\MuseScore 4 Dev\bin\MuseScore4.exe";
+
+        if(!System.IO.File.Exists(exePath))
+        {
+            await ReportStatus("MuseScore is not installed!");
+            return;
+        }
+
+
+        var info = System.IO.File.GetCreationTime(exePath);
+        VersionInstalled = info.ToString("yyyy-MM-dd HH:mm:ss");
+    }
+
 
 
     [RelayCommand]
