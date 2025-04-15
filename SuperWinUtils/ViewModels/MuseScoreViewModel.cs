@@ -124,6 +124,44 @@ public partial class MuseScoreViewModel : BaseViewModel
                 throw new DirectoryNotFoundException("DestinationFilePath does not exist!");
             }
 
+            // Check if file is newer
+
+            var fileName = Path.GetFileName(new Uri(SourceFileUrl).AbsolutePath);
+            var sourceFilePathX = Path.Combine(SourceFilePath, fileName);
+
+            if (File.Exists(sourceFilePathX))
+            {
+                var lastModified = await _fileExchangeService.GetFileDateAsync(SourceFileUrl);
+                if (lastModified == null)
+                {
+                    await ReportStatus("Failed to get file date!");
+                    throw new Exception("Failed to get file date!");
+                }
+
+                var fileDate = File.GetLastWriteTime(sourceFilePathX);
+
+                if (fileDate >= lastModified)
+                {
+                    await ReportStatus("File is up to date!");
+                    return;
+                }
+                else
+                {
+                    await ReportStatus("File is not up to date!");
+                    // Delete the file if it exists
+                    try
+                    {
+                        File.Delete(sourceFilePathX);
+                    }
+                    catch (Exception ex)
+                    {
+                        success = false;
+                        await ReportStatus($"Failed to delete file: {ex.Message}");
+                        throw;
+                    }
+                }
+            }
+
             // Download MuseScore
             await DownloadMuseScoreFileAsync();
 

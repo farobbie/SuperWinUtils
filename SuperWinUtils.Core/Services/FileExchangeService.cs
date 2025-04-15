@@ -7,6 +7,21 @@ namespace SuperWinUtils.Core.Services;
 public class FileExchangeService (HttpClient httpClient) : IFileExchangeService
 {
     private readonly HttpClient _httpClient = httpClient;
+
+    public async Task<DateTimeOffset?> GetFileDateAsync(string sourceFileUrl)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Head, sourceFileUrl);
+        using var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        if (response.Content.Headers.LastModified.HasValue)
+        {
+            var lastModified = response.Content.Headers.LastModified.Value;
+
+            return lastModified;
+        }
+        return null;
+    }
+
     public async Task DownloadFileAsync(string sourceFileUrl, string SourceFilePath, IProgress<DownloadProgress> progress, CancellationToken cancellationToken)
     {
 
