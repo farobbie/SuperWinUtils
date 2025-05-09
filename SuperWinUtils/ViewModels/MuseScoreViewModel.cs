@@ -45,11 +45,11 @@ public partial class MuseScoreViewModel : BaseViewModel
 
 
     [ObservableProperty]
-    public partial string VersionInstalled { get; set; }
+    public partial DateTime? VersionInstalled { get; set; }
 
 
     [ObservableProperty]
-    public partial string VersionServer { get; set; }
+    public partial DateTime? VersionServer { get; set; }
 
 
 
@@ -245,16 +245,22 @@ public partial class MuseScoreViewModel : BaseViewModel
     private async Task CheckVersionMuseScoreAsync()
     {
         await GetServerVersionMuseScoreAsync();
+
+
     }
 
     private async Task GetServerVersionMuseScoreAsync()
     {
-        await ReportStatus("Get ServerVersion");
-        var serverVersion = await _fileExchangeService.GetFileDateAsync(SourceFileUrl);
+        if(!(await IsInternetActiveAsync()))
+        {
+            await ReportStatus("No internetconnection aviable!");
+            return;
+        }
 
+        var serverDate = await _fileExchangeService.GetFileDateAsync(SourceFileUrl);
 
-        VersionServer = serverVersion.Value.ToString("yyyy-MM-dd HH:mm:ss");
-        Debug.WriteLine("VersionServer: " + VersionServer);
+        VersionServer = serverDate.Value.DateTime;
+
         await ReportStatus("Server: " + VersionServer);
     }
 
@@ -268,12 +274,8 @@ public partial class MuseScoreViewModel : BaseViewModel
             return;
         }
 
-
-        var info = System.IO.File.GetCreationTime(exePath);
-        VersionInstalled = info.ToString("yyyy-MM-dd HH:mm:ss");
+        VersionInstalled = System.IO.File.GetCreationTime(exePath);
     }
-
-
 
     [RelayCommand]
     private async Task SaveSettingAsync(string setting)

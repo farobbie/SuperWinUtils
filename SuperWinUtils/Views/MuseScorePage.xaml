@@ -59,7 +59,7 @@
                 </Button>
             </StackPanel>
             
-            <Button Grid.Row="1" Grid.Column="1" Content="Check Update"/>
+            <Button Grid.Row="1" Grid.Column="1" Content="Check Update" Command="{x:Bind ViewModel.CheckVersionMuseScoreCommand}"/>
             <TextBlock Grid.Row="2" Grid.Column="1" Text="Version (installed):" />
             <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Bind ViewModel.VersionInstalled, Mode=TwoWay}" />
             

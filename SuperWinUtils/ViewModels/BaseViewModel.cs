@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SuperWinUtils.Contracts.Services;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 
 namespace SuperWinUtils.ViewModels;
@@ -67,9 +68,14 @@ public partial class BaseViewModel : ObservableRecipient
 
     protected async Task AddThemeActionAsync(Action<ElementTheme> themeAction)
     {
-        _themeSelectorService.ThemeChanged += themeAction;
-
         await Task.CompletedTask;
+        _themeSelectorService.ThemeChanged += themeAction;
     }
 
+    protected static async Task<bool> IsInternetActiveAsync()
+    {
+        await Task.CompletedTask;
+        var profile = NetworkInformation.GetInternetConnectionProfile();
+        return profile != null && profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
+    }
 }
